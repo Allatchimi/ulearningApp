@@ -1,67 +1,116 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/global_loader/global_loader.dart';
 import 'package:ulearning_app/common/widgets/button_widgets.dart';
 import 'package:ulearning_app/common/widgets/text_widgets.dart';
+import 'package:ulearning_app/pages/sign_in/notifier/sign_in_controller.dart';
 import 'package:ulearning_app/pages/sign_in/widgets/sign_in_widgets.dart';
+import 'package:ulearning_app/pages/sign_in/notifier/sign_in_notifier.dart';
+import '../../common/utils/app_colors.dart';
+import '../../common/widgets/app_bar.dart';
+import '../../common/widgets/app_textfield.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends ConsumerStatefulWidget {
   const SignIn({super.key});
 
   @override
+  ConsumerState<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends ConsumerState<SignIn> {
+  late SignInController _controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _controller = SignInController(ref);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final signInProvider = ref.watch(signInNotifierProvider);
+    final loader = ref.watch(appLoaderProvider);
     return Container(
       color: Colors.white,
       child: SafeArea(
         child: Scaffold(
-          appBar: buildAppBar(),
+          appBar: buildAppBar(text: "Login"),
           backgroundColor: Colors.white,
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //top login buttons
-                thirdPartyLogin(),
-                //more login options message
-                Center(
-                    child: text14Normal(
-                        text: "Or use your email account to login ")),
-                SizedBox(
-                  height: 50.h,
+          body: loader == false
+              ? SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //top login buttons
+                      thirdPartyLogin(),
+                      //more login options message
+                      Center(
+                          child: text14Normal(
+                              text: "Or use your email account to login ")),
+                      SizedBox(
+                        height: 50.h,
+                      ),
+                      //email text box
+                      appTextField(
+                          controller: _controller.emailController,
+                          text: "Email",
+                          iconName: "assets/icons/user.png",
+                          hintText: "Enter your email address",
+                          func: (value) => ref
+                              .read(signInNotifierProvider.notifier)
+                              .onUserEmailChange(value)),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      //password text box
+                      appTextField(
+                        controller: _controller.passwordController,
+                        text: "Password",
+                        iconName: "assets/icons/padlock.png",
+                        obscureText: true,
+                        hintText: "Enter your password",
+                        func: (value) => ref
+                            .read(signInNotifierProvider.notifier)
+                            .onUserPasswordChange(value),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 25.w),
+                        child: textUderline(text: "Forgot password ?"),
+                      ),
+                      SizedBox(
+                        height: 100.h,
+                      ),
+                      //app login button
+                      Center(
+                          child: appButton(
+                        buttonName: "Login",
+                        func: () => _controller.handleSignIn(),
+                      )),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Center(
+                          child: appButton(
+                        buttonName: "Register",
+                        isLogin: false,
+                        context: context,
+                        func: () => Navigator.pushNamed(context, "/register"),
+                      )),
+                      //app register button
+                    ],
+                  ),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.blue,
+                    color: AppColors.primaryElement,
+                  ),
                 ),
-                //email text box
-                appTextField(
-                    text: "Email",
-                    iconName: "assets/icons/user.png",
-                    hintText: "Enter your email address"),
-                SizedBox(
-                  height: 20.h,
-                ),
-                //password text box
-                appTextField(
-                    text: "Password",
-                    iconName: "assets/icons/padlock.png",
-                    obscureText: true,
-                    hintText: "Enter your password"),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 25.w),
-                  child: textUderline(text: "Forgot password ?"),
-                ),
-                SizedBox(
-                  height: 100.h,
-                ),
-                //app login button
-                Center(child: appButton(buttonName: "Login")),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Center(child: appButton(buttonName: "Register", isLogin: false)),
-                //app register button
-              ],
-            ),
-          ),
         ),
       ),
     );

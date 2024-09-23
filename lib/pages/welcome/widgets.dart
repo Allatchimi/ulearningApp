@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ulearning_app/common/widgets/app_shadow.dart';
-import 'package:ulearning_app/pages/sign_in/sign_in.dart';
-
 import '../../common/widgets/text_widgets.dart';
 
 Widget appOnboardingPage(
@@ -39,10 +37,7 @@ Widget _nextButton(int index,PageController controller,textb,BuildContext contex
           index, duration: const Duration(milliseconds: 300), curve: Curves.linear
       );
     }else{
-       Navigator.push(
-           context,
-           MaterialPageRoute(builder: (BuildContext context) => const SignIn()),
-       );
+       Navigator.pushNamed(context, "/signIn");
     }
     },
     child: Container(
