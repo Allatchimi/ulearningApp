@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ulearning_app/common/utils/image_res.dart';
-import 'package:ulearning_app/common/widgets/image_widgets.dart';
-import '../../../common/utils/app_colors.dart';
+
+import '../../../../common/utils/app_colors.dart';
+import '../../../../common/utils/image_res.dart';
+import '../../../../common/widgets/image_widgets.dart';
+
 
 var bottomsTabs =<BottomNavigationBarItem> [
   BottomNavigationBarItem(

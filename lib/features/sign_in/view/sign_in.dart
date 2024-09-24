@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/global_loader/global_loader.dart';
 import 'package:ulearning_app/common/widgets/button_widgets.dart';
 import 'package:ulearning_app/common/widgets/text_widgets.dart';
-import 'package:ulearning_app/pages/sign_in/notifier/sign_in_controller.dart';
-import 'package:ulearning_app/pages/sign_in/widgets/sign_in_widgets.dart';
-import 'package:ulearning_app/pages/sign_in/notifier/sign_in_notifier.dart';
-import '../../common/utils/app_colors.dart';
-import '../../common/widgets/app_bar.dart';
-import '../../common/widgets/app_textfield.dart';
+import 'package:ulearning_app/features/sign_in/view/widgets/sign_in_widgets.dart';
+
+import '../../../common/utils/app_colors.dart';
+import '../../../common/widgets/app_bar.dart';
+import '../../../common/widgets/app_textfield.dart';
+import '../provider/sign_in_controller.dart';
+import '../provider/sign_in_notifier.dart';
+
 
 class SignIn extends ConsumerStatefulWidget {
   const SignIn({super.key});
@@ -30,7 +32,7 @@ class _SignInState extends ConsumerState<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    final signInProvider = ref.watch(signInNotifierProvider);
+    //final signInProvider = ref.watch(signInNotifierProvider);
     final loader = ref.watch(appLoaderProvider);
     return Container(
       color: Colors.white,

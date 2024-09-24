@@ -2,14 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ulearning_app/common/routes/app_routes_names.dart';
 import 'package:ulearning_app/common/utils/constants.dart';
-import 'package:ulearning_app/global.dart';
-import 'package:ulearning_app/pages/sign_in/notifier/sign_in_notifier.dart';
+import 'package:ulearning_app/features/sign_in/provider/sign_in_notifier.dart';
 
-import '../../../common/entities/user.dart';
 import '../../../common/global_loader/global_loader.dart';
+import '../../../common/models/user.dart';
 import '../../../common/widgets/pop_messages.dart';
+import '../../../global.dart';
 
 
 class SignInController {

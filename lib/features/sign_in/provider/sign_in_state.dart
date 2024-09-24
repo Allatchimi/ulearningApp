@@ -17,8 +17,10 @@ class SignInState {
     );
   }
 }
+/*
 void main(){
   SignInState state= const SignInState();
   //state.email= "a@a.com";
   SignInState myStata = const SignInState(email: "a@a.com",password: "123");
 }
+*/

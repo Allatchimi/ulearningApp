@@ -3,9 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ulearning_app/common/widgets/pop_messages.dart';
-import 'package:ulearning_app/pages/sign_up/notifier/register_notifier.dart';
+import 'package:ulearning_app/features/sign_up/provider/register_notifier.dart';
 
 import '../../../common/global_loader/global_loader.dart';
+
 
 class SignUpController{
   late WidgetRef ref;
@@ -19,14 +20,11 @@ class SignUpController{
      String password =state.password;
      String rePassword = state.rePassword;
 
-     print("Name entered: ${state.userName}");
-     print("Name email: $email");
 
      if(state.userName.length<6 || name.length<6 ){
        toastInfo("Your name is too  short");
        return;
      }
-     print("pssword entered: '$password'");
      if(state.userName.isEmpty || name.isEmpty ){
        toastInfo("Your name is empty");
        return;

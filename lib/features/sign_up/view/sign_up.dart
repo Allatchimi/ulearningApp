@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ulearning_app/common/widgets/button_widgets.dart';
-import 'package:ulearning_app/common/widgets/text_widgets.dart';
 
-import '../../common/global_loader/global_loader.dart';
-import '../../common/utils/app_colors.dart';
-import '../../common/widgets/app_bar.dart';
-import '../../common/widgets/app_textfield.dart';
-import 'notifier/register_notifier.dart';
-import 'notifier/sign_up_controller.dart';
+import '../../../common/global_loader/global_loader.dart';
+import '../../../common/utils/app_colors.dart';
+import '../../../common/widgets/app_bar.dart';
+import '../../../common/widgets/app_textfield.dart';
+import '../../../common/widgets/button_widgets.dart';
+import '../../../common/widgets/text_widgets.dart';
+import '../provider/register_notifier.dart';
+import '../provider/sign_up_controller.dart';
+
+
+
 
 class SignUp extends ConsumerStatefulWidget {
   const SignUp({super.key});
@@ -30,7 +33,7 @@ class _SignUpState extends ConsumerState<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    final regProvider = ref.watch(registerNotifierProvider);
+    //final regProvider = ref.watch(registerNotifierProvider);
     //final signUpController = SignUpController(ref: ref);
     final loader = ref.watch(appLoaderProvider);
     return Container(

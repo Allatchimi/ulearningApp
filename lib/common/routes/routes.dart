@@ -1,12 +1,13 @@
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ulearning_app/common/routes/app_routes_names.dart';
-import 'package:ulearning_app/global.dart';
-import 'package:ulearning_app/pages/sign_in/sign_in.dart';
-import 'package:ulearning_app/pages/welcome/welcome.dart';
 
-import '../../pages/application/application.dart';
-import '../../pages/sign_up/sign_up.dart';
+import '../../features/application/view/application.dart';
+import '../../features/sign_in/view/sign_in.dart';
+import '../../features/sign_up/view/sign_up.dart';
+import '../../features/welcome/view/welcome.dart';
+import '../../global.dart';
+import 'app_routes_names.dart';
 
 class AppPages {
   static List<RouteEntity> routes() {
@@ -20,7 +21,7 @@ class AppPages {
 
   static MaterialPageRoute generateRouteSettings(RouteSettings settings) {
     if (kDebugMode) {
-      print("clicked route is ${settings.name}");
+     // print("clicked route is ${settings.name}");
     }
 
     // Check if the route exists in the defined routes
