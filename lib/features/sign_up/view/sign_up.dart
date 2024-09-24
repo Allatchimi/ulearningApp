@@ -9,7 +9,7 @@ import '../../../common/widgets/app_textfield.dart';
 import '../../../common/widgets/button_widgets.dart';
 import '../../../common/widgets/text_widgets.dart';
 import '../provider/register_notifier.dart';
-import '../provider/sign_up_controller.dart';
+import '../controller/sign_up_controller.dart';
 
 
 

@@ -9,7 +9,7 @@ import 'package:ulearning_app/features/sign_in/view/widgets/sign_in_widgets.dart
 import '../../../common/utils/app_colors.dart';
 import '../../../common/widgets/app_bar.dart';
 import '../../../common/widgets/app_textfield.dart';
-import '../provider/sign_in_controller.dart';
+import '../controller/sign_in_controller.dart';
 import '../provider/sign_in_notifier.dart';
 
 

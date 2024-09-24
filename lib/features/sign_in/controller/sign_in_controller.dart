@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ulearning_app/common/utils/constants.dart';
 import 'package:ulearning_app/features/sign_in/provider/sign_in_notifier.dart';
+import 'package:ulearning_app/features/sign_in/repo/sign_in_repo.dart';
 
 import '../../../common/global_loader/global_loader.dart';
 import '../../../common/models/user.dart';
@@ -39,11 +40,10 @@ class SignInController {
     ref.read(appLoaderProvider.notifier).setLoaderValue(true);
 
     try {
-      final credentiel = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      final credentiel = await SignInRepo.firebaseSignIn(email,password);
 
       if (credentiel.user == null) {
-        toastInfo("user not found");
+        toastInfo("u ser not found");
         return;
       }
       if (!credentiel.user!.emailVerified) {
