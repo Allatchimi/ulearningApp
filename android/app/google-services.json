@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "865948874196",
+    "project_id": "ulearning-app-b488e",
+    "storage_bucket": "ulearning-app-b488e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865948874196:android:b2b47f451784d953f75241",
+        "android_client_info": {
+          "package_name": "com.example.ulearning"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLQSVfRmRGPToI7uD1OHuQ0M5zJcZQXPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

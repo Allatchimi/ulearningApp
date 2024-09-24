@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ulearning_app/common/utils/constants.dart';
 import 'package:ulearning_app/common/widgets/app_shadow.dart';
+import 'package:ulearning_app/global.dart';
 import '../../common/widgets/text_widgets.dart';
 
 Widget appOnboardingPage(
@@ -31,12 +33,17 @@ Widget appOnboardingPage(
 
 Widget _nextButton(int index,PageController controller,textb,BuildContext context){
   return GestureDetector(
+    
     onTap: (){
+      bool deviceFirstTime = Global.storageServices.getDeviceFirstOpen();
+      print("from on tab ${deviceFirstTime}");
     if(index<3) {
       controller.animateToPage(
           index, duration: const Duration(milliseconds: 300), curve: Curves.linear
       );
     }else{
+      //remember if you are first time or no
+      Global.storageServices.setBool(AppConstants.STORAGE_DEVICE_OPEN_FIRST_KEY, true);
        Navigator.pushNamed(context, "/signIn");
     }
     },

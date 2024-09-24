@@ -1,12 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ulearning_app/common/routes/app_routes_names.dart';
+import 'package:ulearning_app/common/utils/constants.dart';
+import 'package:ulearning_app/global.dart';
 import 'package:ulearning_app/pages/sign_in/notifier/sign_in_notifier.dart';
 
 import '../../../common/entities/user.dart';
 import '../../../common/global_loader/global_loader.dart';
 import '../../../common/widgets/pop_messages.dart';
+
 
 class SignInController {
   WidgetRef ref;
@@ -62,7 +66,9 @@ class SignInController {
         loginRequestEntity.open_id = id;
         loginRequestEntity.type = 1;
         asyncPostAllData(loginRequestEntity);
-        print("user logged in");
+        if (kDebugMode) {
+          print("user logged in");
+        }
       } else {
         toastInfo("login erreur");
       }
@@ -72,7 +78,6 @@ class SignInController {
       } else if (e.code == 'wrong-password') {
         toastInfo("your password is wrong");
       }
-      print(e.code);
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -84,8 +89,24 @@ class SignInController {
   }
 
   void asyncPostAllData(LoginRequestEntity loginRequestEntity) {
-    // ref.read(appLoaderProvider.notifier).setLoaderValue(true);
+      // we need to talk  to server
 
-    //ref.read(appLoaderProvider.notifier).setLoaderValue(false);
+    //have local storage
+    try{
+
+      var navigator = Navigator.of(ref.context);
+      //try to remember user info
+      Global.storageServices.setString(AppConstants.STORAGE_USER_PROFILE_KEY, "123");
+      Global.storageServices.setString(AppConstants.STORAGE_USER_TOKEN_KEY, "123456");
+
+
+      navigator.pushNamedAndRemoveUntil("/application", (route)=> false );
+
+    }catch(e){
+      if(kDebugMode){
+        print(e.toString());
+      }
+    }
+    //redirect to new page
   }
 }

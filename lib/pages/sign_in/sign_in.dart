@@ -99,7 +99,7 @@ class _SignInState extends ConsumerState<SignIn> {
                         buttonName: "Register",
                         isLogin: false,
                         context: context,
-                        func: () => Navigator.pushNamed(context, "/register"),
+                        func: () => Navigator.pushNamed(context, "/sign_up"),
                       )),
                       //app register button
                     ],
