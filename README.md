@@ -2,10 +2,8 @@
 
 ulearning app  project.
 
-# Texte en Gras et Italique
-   Gras : Utilisez ** ou __ pour mettre du texte en gras.
-   Italique : Utilisez * ou _ pour mettre du texte en italique
-
+# 2. Texte en Gras et Italique
+ 
    **Ceci est en gras**
    *Ceci est en italique*
 # 3. Listes
