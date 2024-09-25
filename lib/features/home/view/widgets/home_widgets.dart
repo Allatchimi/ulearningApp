@@ -79,9 +79,9 @@ class UserName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("my name is name");
+
     return Container(
-      child: text24Normal(
+      child: Text24Normal(
         text: Global.storageServices
             .getString(AppConstants.STORAGE_USER_PROFILE_KEY),
         //text: Global.storageServices.getUserProfile()["name"],
@@ -96,9 +96,9 @@ class HelloText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("my hello text");
+
     return Container(
-      child: text24Normal(
+      child: const Text24Normal(
         text: "Hello",
         color: AppColors.primaryThreeElementText,
         fontWeight: FontWeight.bold,

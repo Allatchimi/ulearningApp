@@ -4,31 +4,48 @@ import 'package:ulearning_app/common/widgets/app_shadow.dart';
 import 'package:ulearning_app/global.dart';
 import '../../../common/widgets/text_widgets.dart';
 
-Widget appOnboardingPage(
-    PageController controller,
-    {String imagePath ="" ,
-      String title = "",
-      String textb="",
-      String subtitle = "",index=0, required BuildContext context}) {
-  return Column(
-    children: [
-      const SizedBox(height: 60),
-      Image.asset(imagePath, fit:BoxFit.fitWidth,
-      height: 400,width:500,),
-      Container(
-        margin: const EdgeInsets.only(top: 15),
-        child: text24Normal(text: title),
-      ),
-      Container(
-       // margin: const EdgeInsets.only(top: 15),
-        padding: const EdgeInsets.only(left: 30, right: 30),
-        child: text16Normal(
-            text: subtitle
+class AppOnboardingPage extends StatelessWidget {
+
+  final PageController controller;
+  final String imagePath;
+  final String title ;
+  final  String textb;
+  final  String subtitle;
+  final int index;
+  final BuildContext context;
+  const AppOnboardingPage({
+    super.key,
+    required this.imagePath,
+    required this.controller,
+    required this.context,
+    required this.subtitle,
+    required this.title,
+    required this.textb,
+    required this.index,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 60),
+        Image.asset(imagePath, fit:BoxFit.fitWidth,
+          height: 400,width:500,),
+        Container(
+          margin: const EdgeInsets.only(top: 15),
+          child: Text24Normal(text: title),
         ),
-      ),
-      _nextButton(index,controller,textb, context),
-    ],
-  );
+        Container(
+          // margin: const EdgeInsets.only(top: 15),
+          padding: const EdgeInsets.only(left: 30, right: 30),
+          child: Text16Normal(
+              text: subtitle
+          ),
+        ),
+        _nextButton(index,controller,textb, context),
+      ],
+    );
+  }
 }
 
 Widget _nextButton(int index,PageController controller,textb,BuildContext context){
@@ -52,7 +69,7 @@ Widget _nextButton(int index,PageController controller,textb,BuildContext contex
       height: 50,
       margin: const EdgeInsets.only(top: 100,left: 25,right: 25),
       decoration: appBoxShadow(),
-      child: Center(child: text16Normal(text: textb, color: Colors.white))
+      child: Center(child: Text16Normal(text: textb, color: Colors.white))
     ),
   );
 }

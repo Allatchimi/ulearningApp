@@ -3,7 +3,34 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../utils/app_colors.dart';
 
-Widget text24Normal({String text = " ", Color color = AppColors.primaryElement,FontWeight fontWeight = FontWeight.normal}) {
+class Text24Normal extends StatelessWidget {
+ final  String text ;
+    final  Color color;
+    final FontWeight fontWeight;
+  const Text24Normal({
+    super.key,
+    this.text = "",
+    this.color =AppColors.primaryElement,
+    this.fontWeight = FontWeight.normal,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: color,
+        fontSize: 24,
+        fontWeight: fontWeight,
+      ),
+    );
+  }
+}
+
+/*
+Widget text24Normal({String text = " ",
+  Color color = AppColors.primaryElement,FontWeight fontWeight = FontWeight.normal}) {
   return Text(
     text,
     textAlign: TextAlign.center,
@@ -14,31 +41,50 @@ Widget text24Normal({String text = " ", Color color = AppColors.primaryElement,F
     ),
   );
 }
+*/
+class Text16Normal extends StatelessWidget {
+  final String text ;
+  final  Color color ;
+  const Text16Normal(
+      {super.key,
+        this.text="",
+        this.color = AppColors.primarySecondaryElementText
+      });
 
-Widget text16Normal(
-    {String text = " ", Color color = AppColors.primarySecondaryElementText}) {
-  return Text(
-    text,
-    textAlign: TextAlign.center,
-    style: TextStyle(
-      color: color,
-      fontSize: 16,
-      fontWeight: FontWeight.normal,
-    ),
-  );
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: color,
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+      ),
+    );
+  }
 }
 
-Widget text14Normal(
-    {String text = " ", Color color = AppColors.primaryThreeElementText}) {
-  return Text(
-    text,
-    textAlign: TextAlign.start,
-    style: TextStyle(
-      color: color,
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-    ),
-  );
+class Text14Normal extends StatelessWidget {
+  final String text;
+  final Color color;
+  const Text14Normal({
+    super.key,
+     this.text ="",
+     this.color= AppColors.primaryThreeElementText
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.start,
+      style: TextStyle(
+        color: color,
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+      ),
+    );
+  }
 }
 
 Widget textUderline({String text = "Your text"}) {

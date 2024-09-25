@@ -34,6 +34,7 @@ class _HomsState extends ConsumerState<Home> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 10.h,),
               const HelloText(),
               const UserName(),
               SizedBox(

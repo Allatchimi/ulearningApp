@@ -2,6 +2,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/utils/image_res.dart';
 import 'package:ulearning_app/features/welcome/view/widgets.dart';
 
 
@@ -12,7 +13,7 @@ class Welcome extends ConsumerWidget {
 
 
   final PageController _controller = PageController();
-  int dotsIndex = 0;
+  //int dotsIndex = 0;
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     //print('my dots value is $dotsIndex');
@@ -35,24 +36,24 @@ class Welcome extends ConsumerWidget {
                   scrollDirection: Axis.horizontal,
                   controller: _controller,
                   children: [
-                    appOnboardingPage(_controller,
-                        imagePath: "assets/images/image1.png",
+                    AppOnboardingPage(controller: _controller,
+                        imagePath: ImageRes.reading,
                         title: "First see Learning",
                         subtitle:
                             "Forget about peper an knowledge in one learning",
                         textb: 'Next',
                         context: context,
                         index: 1),
-                    appOnboardingPage(_controller,
-                        imagePath: "assets/images/image2.png",
+                    AppOnboardingPage(controller: _controller,
+                        imagePath: ImageRes.man,
                         title: "First see Learning",
                         subtitle:
                             "Forget about peper an knowledge in one learning",
                         textb: 'Next',
                         context: context,
                         index: 2),
-                    appOnboardingPage(_controller,
-                        imagePath: "assets/images/image3.png",
+                    AppOnboardingPage(controller: _controller,
+                        imagePath: ImageRes.boy,
                         title: "First see Learning",
                         subtitle:
                             "Forget about peper an knowledge in one learning",

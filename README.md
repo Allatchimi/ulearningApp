@@ -1,13 +1,13 @@
-# ulearning_app
+#  ulearning_app
 
 ulearning app  project.
 
 # Texte en Gras et Italique
-Gras : Utilisez ** ou __ pour mettre du texte en gras.
-Italique : Utilisez * ou _ pour mettre du texte en italique
+   Gras : Utilisez ** ou __ pour mettre du texte en gras.
+   Italique : Utilisez * ou _ pour mettre du texte en italique
 
-**Ceci est en gras**
-*Ceci est en italique*
+   **Ceci est en gras**
+   *Ceci est en italique*
 # 3. Listes
 - Élément 1
 - Élément 2
@@ -24,9 +24,9 @@ Italique : Utilisez * ou _ pour mettre du texte en italique
 ## Installation
 1. a.gitignore
 
-```
-   /assets/images/*.png
-```
+   ```
+      /assets/images/*.png
+   ```
 2. Commande git :si le dossier ou les fichiers ont déjà été suivis par Git, tu devras les supprimer de l'index Git sans les supprimer localement.
 
    ```bash
@@ -48,15 +48,6 @@ Italique : Utilisez * ou _ pour mettre du texte en italique
 
 ### Sous-sous-titre
 
-
-
-
-
-
-   ``` 
-   bash 
-   
-   ```bash
 
 
 

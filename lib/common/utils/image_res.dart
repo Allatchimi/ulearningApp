@@ -11,7 +11,9 @@ class ImageRes{
   ImageRes._();
   static const String _imageBase = "assets/images";
   static const String _iconBase = "assets/icons";
+
   static const String defaultImage = "$_iconBase/default.png";
+
   static const String  home = '$_iconBase/home.png';
   static const String  search = '$_iconBase/search.png';
   static const String play  = '$_iconBase/play.png';
@@ -21,7 +23,14 @@ class ImageRes{
   static const String  banner1 ='$_imageBase/banner1.jpg';
   static const String  banner2 ='$_imageBase/banner2.jpg';
   static const String  banner3 ='$_imageBase/banner4.jpg';
+
   static const String  login ='$_imageBase/login.png';
   static const String  e404 ='$_imageBase/404.png';
+
+  static const String  reading ='$_imageBase/image1.png';
+  static const String  man ='$_imageBase/image2.png';
+  static const String  boy ='$_imageBase/image3.png';
+
+
 
 }
