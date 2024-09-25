@@ -20,7 +20,7 @@ Widget appOnboardingPage(
         child: text24Normal(text: title),
       ),
       Container(
-        margin: const EdgeInsets.only(top: 15),
+       // margin: const EdgeInsets.only(top: 15),
         padding: const EdgeInsets.only(left: 30, right: 30),
         child: text16Normal(
             text: subtitle

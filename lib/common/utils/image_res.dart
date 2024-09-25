@@ -9,10 +9,19 @@ class ImageRes{
    */
 
   ImageRes._();
-  static const String _imageBase = "assets/icons";
-  static const String  home = '$_imageBase/user.png';
-  static const String  search = '$_imageBase/padlock.png';
-  static const String play  = '$_imageBase/user.png';
-  static const String  message ='$_imageBase/padlock.png';
-  static const String  profile ='$_imageBase/user.png';
+  static const String _imageBase = "assets/images";
+  static const String _iconBase = "assets/icons";
+  static const String defaultImage = "$_iconBase/default.png";
+  static const String  home = '$_iconBase/home.png';
+  static const String  search = '$_iconBase/search.png';
+  static const String play  = '$_iconBase/play.png';
+  static const String  message ='$_iconBase/messenger.png';
+  static const String  profile ='$_iconBase/user.png';
+
+  static const String  banner1 ='$_imageBase/banner1.jpg';
+  static const String  banner2 ='$_imageBase/banner2.jpg';
+  static const String  banner3 ='$_imageBase/banner4.jpg';
+  static const String  login ='$_imageBase/login.png';
+  static const String  e404 ='$_imageBase/404.png';
+
 }

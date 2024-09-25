@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ulearning_app/common/widgets/pop_messages.dart';
 import 'package:ulearning_app/features/sign_up/provider/register_notifier.dart';
 
 import '../../../common/global_loader/global_loader.dart';
+import '../../../main.dart';
 import '../repo/sign_up_repo.dart';
 
 
@@ -47,7 +47,7 @@ class SignUpController{
      ref.read(appLoaderProvider.notifier).setLoaderValue(true);
 
      Future.delayed(const Duration(seconds: 2),() async {
-       var context = Navigator.of(ref.context);
+       //var context = Navigator.of(ref.context);
        try{
          final credentiel = await SingUpRepo.firebaseSignUp(email, password);
 
@@ -58,7 +58,8 @@ class SignUpController{
            await credentiel.user?.sendEmailVerification();
            await credentiel.user?.updateDisplayName(name);
            toastInfo("Asn email has been to verify your account. please open that email and verify");
-           context.pop();
+          // context.pop();
+           navKey.currentState?.pop();
          }
        } on FirebaseAuthException catch(e) {
          if (e.code == "weak-password") {

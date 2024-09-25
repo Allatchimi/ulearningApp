@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:ulearning_app/common/widgets/app_bar.dart';
+
 import 'package:ulearning_app/common/widgets/app_shadow.dart';
 import 'package:ulearning_app/features/application/view/widgets/widgets.dart';
 
@@ -20,7 +20,6 @@ class Application extends ConsumerWidget {
       color: Colors.white,
       child: SafeArea(
         child: Scaffold(
-          appBar: buildAppBar(text: "Home Page"),
           body: appScreens(index: index),
           bottomNavigationBar: Container(
             width: 375.w,

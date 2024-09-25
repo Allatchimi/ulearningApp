@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
   runApp( const ProviderScope(child:MyApp()));
 }
 
+final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
         designSize: const Size(375, 812),
         builder: (context, child) {
           return MaterialApp(
+            navigatorKey: navKey,
             theme: AppTheme.appThemeData,
             onGenerateRoute: AppPages.generateRouteSettings,
           );

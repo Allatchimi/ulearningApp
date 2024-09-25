@@ -7,7 +7,7 @@ part of 'application_nav_notifier.dart';
 // **************************************************************************
 
 String _$applicationNavIndexHash() =>
-    r'72b9886102215121642eb0dbb787b91d8426b2c6';
+    r'14aef88c98ad478b9f8ab1f8b14ee213904ad3a7';
 
 /// See also [ApplicationNavIndex].
 @ProviderFor(ApplicationNavIndex)

@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../utils/app_colors.dart';
 
-Widget text24Normal({String text = " ", Color color = AppColors.primaryText}) {
+Widget text24Normal({String text = " ", Color color = AppColors.primaryElement,FontWeight fontWeight = FontWeight.normal}) {
   return Text(
     text,
     textAlign: TextAlign.center,
     style: TextStyle(
       color: color,
       fontSize: 24,
-      fontWeight: FontWeight.normal,
+      fontWeight: fontWeight,
     ),
   );
 }

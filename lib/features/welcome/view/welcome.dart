@@ -36,23 +36,23 @@ class Welcome extends ConsumerWidget {
                   controller: _controller,
                   children: [
                     appOnboardingPage(_controller,
-                        imagePath: "assets/images/image1.jpg",
+                        imagePath: "assets/images/image1.png",
                         title: "First see Learning",
                         subtitle:
                             "Forget about peper an knowledge in one learning",
-                        textb: 'next',
+                        textb: 'Next',
                         context: context,
                         index: 1),
                     appOnboardingPage(_controller,
-                        imagePath: "assets/images/image2.jpg",
+                        imagePath: "assets/images/image2.png",
                         title: "First see Learning",
                         subtitle:
                             "Forget about peper an knowledge in one learning",
-                        textb: 'next2',
+                        textb: 'Next',
                         context: context,
                         index: 2),
                     appOnboardingPage(_controller,
-                        imagePath: "assets/images/image3.jpg",
+                        imagePath: "assets/images/image3.png",
                         title: "First see Learning",
                         subtitle:
                             "Forget about peper an knowledge in one learning",

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ulearning_app/common/utils/constants.dart';
 import 'package:ulearning_app/features/sign_in/provider/sign_in_notifier.dart';
 import 'package:ulearning_app/features/sign_in/repo/sign_in_repo.dart';
+import 'package:ulearning_app/main.dart';
 
 import '../../../common/global_loader/global_loader.dart';
 import '../../../common/models/user.dart';
@@ -13,13 +14,13 @@ import '../../../global.dart';
 
 
 class SignInController {
-  WidgetRef ref;
+  // WidgetRef ref;
 
-  SignInController(this.ref);
+  SignInController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  Future<void> handleSignIn() async {
+  Future<void> handleSignIn(WidgetRef ref) async {
     var state = ref.read(signInNotifierProvider);
     String email = state.email;
     String password = state.password;
@@ -93,13 +94,18 @@ class SignInController {
     //have local storage
     try{
 
-      var navigator = Navigator.of(ref.context);
+      //var navigator = Navigator.of(ref.context);
+
       //try to remember user info
+      /*Global.storageServices.setString(AppConstants.STORAGE_USER_PROFILE_KEY, jsonEncode(
+          {'name':'amine','email':'amine@gmail.com','age':34
+          }));
+      */
       Global.storageServices.setString(AppConstants.STORAGE_USER_PROFILE_KEY, "123");
       Global.storageServices.setString(AppConstants.STORAGE_USER_TOKEN_KEY, "123456");
 
 
-      navigator.pushNamedAndRemoveUntil("/application", (route)=> false );
+    navKey.currentState?.pushNamedAndRemoveUntil("/application", (route)=> false );
 
     }catch(e){
       if(kDebugMode){
