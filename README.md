@@ -22,12 +22,24 @@ Italique : Utilisez * ou _ pour mettre du texte en italique
 ---
 # Pour insérer du code, utilisez trois backticks ``` pour les blocs de code, ou des simples backticks ` pour du code en ligne.
 ## Installation
-1. Clonez le dépôt :
+1. a.gitignore
+
+```
+   /assets/images/*.png
+```
+2. Commande git :si le dossier ou les fichiers ont déjà été suivis par Git, tu devras les supprimer de l'index Git sans les supprimer localement.
+
    ```bash
 
-   git clone https://github.com/mon-projet.git
+   git rm -r --cached assets/
 
+    ```
+3. Puis, fais un commit pour appliquer les changements :
 
+    ```
+   git commit -m "Ignore assets folder"
+
+   ```
 
 # Titre principal
 
