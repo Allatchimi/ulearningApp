@@ -24,6 +24,7 @@ Italique : Utilisez * ou _ pour mettre du texte en italique
 ## Installation
 1. Clonez le dépôt :
    ```bash
+
    git clone https://github.com/mon-projet.git
 
 
@@ -38,10 +39,13 @@ Italique : Utilisez * ou _ pour mettre du texte en italique
 
 
 
-## Getting Started
 
 
-''' 
-bash 
+   ``` 
+   bash 
+   
+   ```bash
 
-''''
+
+
+
