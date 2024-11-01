@@ -1,9 +1,14 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ulearning_app/features/course_detail/view/course_detail.dart';
 import 'package:ulearning_app/features/home/view/home.dart';
+import 'package:ulearning_app/features/profil/view/course.dart';
+import 'package:ulearning_app/features/profil/view/profil.dart';
+import 'package:ulearning_app/features/profil/view/your_course.dart';
 
 import '../../features/application/view/application.dart';
+import '../../features/lesson_detail/lesson_detail.dart';
 import '../../features/sign_in/view/sign_in.dart';
 import '../../features/sign_up/view/sign_up.dart';
 import '../../features/welcome/view/welcome.dart';
@@ -18,6 +23,11 @@ class AppPages {
       RouteEntity(path: AppRoutesNames.SIGN_UP, page: const SignUp()),
       RouteEntity(path: AppRoutesNames.APPLICATION, page: const Application()),
       RouteEntity(path: AppRoutesNames.HOME, page: const Home()),
+      RouteEntity(path: AppRoutesNames.COURSE_DETAIL, page: const CourseDetail()),
+      RouteEntity(path: AppRoutesNames.LESSON_DETAIL, page: const LessonDetail()),
+      RouteEntity(path: AppRoutesNames.PROFIL, page:  ProfileScreen()),
+      RouteEntity(path: AppRoutesNames.COURS, page:  CoursesScreen()),
+      RouteEntity(path: AppRoutesNames.YOURCOURS, page:  YourCoursesScreen()),
     ];
   }
 

@@ -34,7 +34,7 @@ Widget appTextField(
               Container(
                 //for showing icons
                 margin: EdgeInsets.only(left: 10.w),
-                child: appImage(imagePath: iconName),
+                child: AppImage(imagePath: iconName),
                 // appImage()
               ),
               //our textfield

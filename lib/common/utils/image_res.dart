@@ -19,6 +19,8 @@ class ImageRes{
   static const String play  = '$_iconBase/play.png';
   static const String  message ='$_iconBase/messenger.png';
   static const String  profile ='$_iconBase/user.png';
+  static const String  menu1='$_iconBase/menu1.png';
+  static const String  menu ='$_iconBase/menu.png';
 
   static const String  banner1 ='$_imageBase/banner1.jpg';
   static const String  banner2 ='$_imageBase/banner2.jpg';

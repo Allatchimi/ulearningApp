@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:ulearning_app/common/widgets/app_bar.dart';
 import 'package:ulearning_app/common/widgets/search_widgets.dart';
 import 'package:ulearning_app/features/home/controller/home_controller.dart';
 import 'package:ulearning_app/features/home/view/widgets/home_widgets.dart';
@@ -26,7 +25,8 @@ class _HomsState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(text: "Home"),
+      backgroundColor: Colors.white,
+      appBar: homeAppBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
         child: SingleChildScrollView(
@@ -37,14 +37,13 @@ class _HomsState extends ConsumerState<Home> {
               SizedBox(height: 10.h,),
               const HelloText(),
               const UserName(),
-              SizedBox(
-                height: 20.h,
-              ),
+              SizedBox(height: 20.h),
               searchBar(),
-              SizedBox(
-                height: 15.h,
-              ),
+              SizedBox(height: 15.h),
              HomeBanner(ref: ref, controller: _controller),
+             // SizedBox(height: 5.h,),
+              const HomeMenuBar(),
+               const CourseItemGrid(),
             ],
           ),
         ),

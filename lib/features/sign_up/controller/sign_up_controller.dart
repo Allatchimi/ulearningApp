@@ -20,54 +20,59 @@ class SignUpController {
     String password = state.password;
     String rePassword = state.rePassword;
 
-    // Validation des champs
-    if (name.length < 6) {
-      toastInfo("Your name is too short");
+    print("Nom mis à jour dans nom : ${name}");
+
+
+    if (name.length < 4) {
+      toastInfo("Votre nom est trop court");
       return;
     }
     if (name.isEmpty) {
-      toastInfo("Your name is empty");
+      toastInfo("Votre nom est vide");
       return;
     }
     if (email.isEmpty) {
-      toastInfo("Your email is empty");
+      toastInfo("Votre email est vide");
       return;
     }
     if (password.isEmpty || rePassword.isEmpty) {
-      toastInfo("Your password is empty");
+      toastInfo("Votre mot de passe est vide");
       return;
     }
     if (password != rePassword) {
-      toastInfo("Your passwords do not match");
+      toastInfo("Les mots de passe ne correspondent pas");
       return;
     }
 
     ref.read(appLoaderProvider.notifier).setLoaderValue(true);
 
-    Future.delayed(const Duration(seconds: 3), () async {
-      try {
-        final credential = await SingUpRepo.firebaseSignUp(email, password);
-
-        if (credential.user != null) {
-          await credential.user?.sendEmailVerification();
-          await credential.user?.updateDisplayName(name);
-          toastInfo("An email has been sent to verify your account. Please check your email.");
-          navKey.currentState?.pop();
-        }
-      } on FirebaseAuthException catch (e) {
-        if (e.code == "weak-password") {
-          toastInfo("This password is too weak");
-        } else if (e.code == "email-already-in-use") {
-          toastInfo("This email address has already been registered");
-        } else if (e.code == "user-not-found") {
-          toastInfo("User not found");
-        }
-      } catch (e) {
-        if (kDebugMode) {
-          print(e.toString());
-        }
-        ref.read(appLoaderProvider.notifier).setLoaderValue(false);
+    try {
+      final credential = await SingUpRepo.firebaseSignUp(email, password);
+      if (credential.user != null) {
+        await credential.user?.sendEmailVerification();
+        await credential.user?.updateDisplayName(name);
+        String photoUrl = "uploads/default.png";
+        await credential.user?.updatePhotoURL(photoUrl);
+        toastInfo("Un email de vérification a été envoyé. Veuillez vérifier votre boîte mail.");
+        navKey.currentState?.pop();
       }
-    });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "weak-password") {
+        toastInfo("Ce mot de passe est trop faible");
+      } else if (e.code == "email-already-in-use") {
+        toastInfo("Cet email est déjà utilisé");
+      } else if (e.code == "user-not-found") {
+        toastInfo("Utilisateur non trouvé");
+      } else {
+        toastInfo("Erreur d'authentification : ${e.message}");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Erreur inattendue : $e");
+      }
+    } finally {
+      ref.read(appLoaderProvider.notifier).setLoaderValue(false);
+    }
   }
+
 }

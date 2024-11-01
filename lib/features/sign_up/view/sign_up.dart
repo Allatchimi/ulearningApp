@@ -33,7 +33,8 @@ class _SignUpState extends ConsumerState<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    //final regProvider = ref.watch(registerNotifierProvider);
+    final regProvider = ref.watch(registerNotifierProvider);
+    print("Nom actuel dans l'interface : $regProvider");
     //final signUpController = SignUpController(ref: ref);
     final loader = ref.watch(appLoaderProvider);
     return Container(
@@ -62,9 +63,10 @@ class _SignUpState extends ConsumerState<SignUp> {
                         text: "Name",
                         iconName: "assets/icons/user.png",
                         hintText: "Enter your name",
-                        func: (value) => ref
-                            .read(registerNotifierProvider.notifier)
-                            .onUserNameChange(value),
+                        func: (value) {
+                            ref.read(registerNotifierProvider.notifier)
+                            .onUserNameChange(value);
+                          print("Nom actuel dans l'interface : $value");}
                       ),
                       SizedBox(
                         height: 20.h,
@@ -117,7 +119,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                         height: 100.h,
                       ),
                       Center(
-                          child: appButton(
+                          child: AppButton(
                         buttonName: "Sign Up",
                         isLogin: true,
                         context: context,

@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/features/course_detail/view/course_detail.dart';
+import 'package:ulearning_app/features/lesson_detail/lesson_detail.dart';
+import 'package:ulearning_app/features/profil/view/course.dart';
+import 'package:ulearning_app/features/profil/view/your_course.dart';
 
 import '../../../../common/utils/app_colors.dart';
 import '../../../../common/utils/image_res.dart';
 import '../../../../common/widgets/image_widgets.dart';
 import '../../../home/view/home.dart';
+import '../../../profil/view/profil.dart';
 
 
 var bottomsTabs =<BottomNavigationBarItem> [
@@ -60,10 +65,12 @@ Widget bottomContainer({
 Widget appScreens({int index=0}){
    List<Widget> screens = [
    const Home(),
-   Center(child: appImage(imagePath: ImageRes.search,width: 200,height: 200),),
-   Center(child: appImage(imagePath: ImageRes.play,width: 200,height: 200),),
-   Center(child: appImage(imagePath: ImageRes.message,width: 200,height: 200),),
-   Center(child: appImage(imagePath: ImageRes.profile,width: 200,height: 200),)
+   YourCoursesScreen(),
+   const CourseDetail(),
+   CoursesScreen(),
+   //const Center(child: AppImage(imagePath: ImageRes.play,width: 200,height: 200),),
+  // const  Center(child: AppImage(imagePath: ImageRes.profile,width: 200,height: 200),)
+     ProfileScreen(),
    ];
    return screens[index];
 }
