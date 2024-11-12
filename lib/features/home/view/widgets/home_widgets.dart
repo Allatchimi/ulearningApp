@@ -64,7 +64,7 @@ class BannerContainer extends StatelessWidget {
     return Container(
       width: 325.w,
       height: 200.h,
-      margin: const EdgeInsets.only(right:3,left:3),
+      margin: const EdgeInsets.only(right: 3, left: 3),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
@@ -77,14 +77,18 @@ class BannerContainer extends StatelessWidget {
 }
 
 class UserName extends StatelessWidget {
-  const UserName({super.key});
+  final WidgetRef ref;
+  const UserName({super.key, required this.ref});
 
   @override
   Widget build(BuildContext context) {
-    final userName = Global.storageServices.getString(AppConstants.STORAGE_USER_PROFILE_KEY) ?? "User";
+    final userState = ref.watch(homeUserProfileProvider);
+    final userName = Global.storageServices
+            .getString(AppConstants.STORAGE_USER_PROFILE_KEY) ??
+        "User";
     return Text24Normal(
       text: userName,
-     // text: Global.storageServices.getString(AppConstants.STORAGE_USER_PROFILE_KEY),
+      // text: Global.storageServices.getString(AppConstants.STORAGE_USER_PROFILE_KEY),
       //text: Global.storageServices.getUserProfile().access_token==null?Container(),
       fontWeight: FontWeight.bold,
     );
@@ -134,7 +138,9 @@ class HomeMenuBar extends StatelessWidget {
           ),
         ),
         //court text
-        SizedBox(height: 20.h,),
+        SizedBox(
+          height: 20.h,
+        ),
         Row(
           children: [
             Container(
@@ -150,14 +156,12 @@ class HomeMenuBar extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.w),
               child: const Text11Normal(
-                  text: "Popular", color: AppColors.primaryThreeElementText
-              ),
+                  text: "Popular", color: AppColors.primaryThreeElementText),
             ),
             Container(
               margin: EdgeInsets.only(left: 30.w),
               child: const Text11Normal(
-                  text: "Newest", color: AppColors.primaryThreeElementText
-              ),
+                  text: "Newest", color: AppColors.primaryThreeElementText),
             ),
           ],
         ),
@@ -166,41 +170,80 @@ class HomeMenuBar extends StatelessWidget {
   }
 }
 
-
 class CourseItemGrid extends StatelessWidget {
-  const CourseItemGrid({super.key});
+  final WidgetRef ref;
+
+  const CourseItemGrid({super.key, required this.ref});
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      physics: const ScrollPhysics(),
-      shrinkWrap: true,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          crossAxisSpacing: 40,
-          mainAxisSpacing:  40,
+    final courseState = ref.watch(homeCourseListProvider);
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 18.h),
+      child: courseState.when(
+        data: (data) => GridView.builder(
+          physics: const ScrollPhysics(),
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              childAspectRatio: 1.6),
+          itemCount: data?.length ?? 0,
+          itemBuilder: (_, int index) {
+            // Assurez-vous que les données existent et vérifiez si elles ne sont pas nulles
+            final courseItem = data?[index];
+            final imagePath = courseItem?.thumbnail ?? ImageRes.defaultImage;
+
+            return AppBoxDecoratioonImage(
+              imagePath: imagePath,
+              fit: BoxFit.fitWidth,
+              courseItem: data![index],
+              func: () {
+              Navigator.of(context).pushNamed("/course_detail",
+              arguments: {
+                "id":data[index].id!
+              }
+              );
+              },
+            );
+          },
         ),
-        itemCount: 12,
-        itemBuilder: (_,int index){
-           return const AppImage();
-        }
+        error: (error, stackTrace) {
+          print(stackTrace.toString());
+          return Center(child: Text("Error loading data: $error"));
+        },
+        loading: () => Center(
+          child: Text("Loading ..."),
+        ),
+      ),
     );
   }
 }
 
-
-AppBar homeAppBar() {
+AppBar homeAppBar(WidgetRef ref) {
+  var profileState = ref.watch(homeUserProfileProvider);
   return AppBar(
     title: Container(
       margin: EdgeInsets.only(left: 7.w, right: 7.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-         // AppImage(width: 18.w, height: 12.h, imagePath: ImageRes.menu1),
+          // AppImage(width: 18.w, height: 12.h, imagePath: ImageRes.menu1),
           const Icon(Icons.menu),
-          GestureDetector(
-            child: const AppBoxDecoratioonImage(),
-          ),
+          profileState.when(
+              data: (value) => GestureDetector(
+                    child: const AppBoxDecoratioonImage(
+                      imagePath: ImageRes.profile,
+                    ),
+                  ),
+              error: (err, stack) => AppImage(
+                    width: 18.w,
+                    height: 12.h,
+                    imagePath: ImageRes.profile,
+                  ),
+              loading: () => Container())
         ],
       ),
     ),

@@ -23,7 +23,7 @@ class AppPages {
       RouteEntity(path: AppRoutesNames.SIGN_UP, page: const SignUp()),
       RouteEntity(path: AppRoutesNames.APPLICATION, page: const Application()),
       RouteEntity(path: AppRoutesNames.HOME, page: const Home()),
-      RouteEntity(path: AppRoutesNames.COURSE_DETAIL, page: const CourseDetail()),
+      RouteEntity(path: AppRoutesNames.COURSE_DETAIL, page:  CourseDetail()),
       RouteEntity(path: AppRoutesNames.LESSON_DETAIL, page: const LessonDetail()),
       RouteEntity(path: AppRoutesNames.PROFIL, page:  ProfileScreen()),
       RouteEntity(path: AppRoutesNames.COURS, page:  CoursesScreen()),

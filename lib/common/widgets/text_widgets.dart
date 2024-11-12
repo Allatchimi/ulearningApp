@@ -151,6 +151,35 @@ class Text10Normal extends StatelessWidget {
     );
   }
 }
+class FadeText extends StatelessWidget {
+  final String text;
+  final Color color;
+  final TextAlign textAlign;
+  final FontWeight fontWeight;
+  final double fontSize;
+  const FadeText(
+      {super.key,
+        this.text = "",
+        this.textAlign= TextAlign.left ,
+        this.fontSize = 10,
+        this.fontWeight=  FontWeight.bold,
+        this.color = AppColors.primaryElementText});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      softWrap: false,
+      maxLines: 1,
+      textAlign: textAlign,
+      overflow: TextOverflow.fade,
+      style: TextStyle(
+        color: color,
+        fontSize: fontSize.sp,
+        fontWeight: fontWeight,
+      ),
+    );
+  }
+}
 
 Widget textUderline({String text = "Your text"}) {
   return GestureDetector(

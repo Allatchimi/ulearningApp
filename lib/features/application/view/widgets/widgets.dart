@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ulearning_app/features/course_detail/view/course_detail.dart';
-import 'package:ulearning_app/features/lesson_detail/lesson_detail.dart';
 import 'package:ulearning_app/features/profil/view/course.dart';
 import 'package:ulearning_app/features/profil/view/your_course.dart';
 
@@ -66,9 +64,9 @@ Widget appScreens({int index=0}){
    List<Widget> screens = [
    const Home(),
    YourCoursesScreen(),
-   const CourseDetail(),
+   //const CourseDetail(),
    CoursesScreen(),
-   //const Center(child: AppImage(imagePath: ImageRes.play,width: 200,height: 200),),
+   const Center(child: AppImage(imagePath: ImageRes.play,width: 200,height: 200),),
   // const  Center(child: AppImage(imagePath: ImageRes.profile,width: 200,height: 200),)
      ProfileScreen(),
    ];

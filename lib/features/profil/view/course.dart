@@ -36,7 +36,7 @@ class CoursesScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            const CourseDetailIconText(),
+           // const CourseDetailIconText(),
             const SizedBox(height: 40),
             const Text(
               "User Interface",

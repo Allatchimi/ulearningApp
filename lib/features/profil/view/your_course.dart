@@ -103,7 +103,7 @@ class YourCoursesScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const LessonInfo(),
+            //  const LessonInfo(),
               /*
               Expanded(
                 child:

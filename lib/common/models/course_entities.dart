@@ -1,10 +1,10 @@
 import 'dart:core';
 
-class CourseResponseEntity{
+class CourseRequestEntity{
   int? id;
 
-  CourseResponseEntity({this.id});
-  Map<String, dynamic> toJson() =>{ "id":id,};
+  CourseRequestEntity({this.id});
+  Map<String, dynamic> toJson() =>{ "id":id};
 }
 
 class SearchRequestEntity{
@@ -13,23 +13,22 @@ class SearchRequestEntity{
   Map<String,dynamic> toJson() => {"search": search};
 }
 
-class CourseListResponseEntity{
-  int? code;
-  String? msg;
-  List<CourseItem>? data;
+class CourseListResponseEntity {
+  final String code;
+  final String msg;
+  final List<CourseItem> data;
 
-  CourseListResponseEntity({this.code, this.msg, this.data});
-  factory CourseListResponseEntity.fromJson(Map<String,dynamic> json) =>
-      CourseListResponseEntity(
-        code: json["code"],
-        msg: json["msg"],
-        data: json["data"]== null
-          ? []
-          : List<CourseItem>.from(
-          json["data"].map((x)=> CourseItem.fromJson(x))
-        ),
-      );
+  CourseListResponseEntity({required this.code, required this.msg, required this.data});
+
+  factory CourseListResponseEntity.fromJson(Map<String, dynamic> json) {
+    return CourseListResponseEntity(
+      code: json['code'],
+      msg: json['msg'],
+      data: List<CourseItem>.from(json['data'].map((item) => CourseItem.fromJson(item))),
+    );
+  }
 }
+
 //api post response msg
 class CourseDetailResponseEntity{
   int? code;
@@ -43,6 +42,12 @@ class CourseDetailResponseEntity{
         msg: json["msg"],
         data: CourseItem.fromJson(json["data"]),
       );
+
+
+  @override
+  String toString() {
+    return 'CourseDetailResponseEntity(code: $code, msg: $msg, data: $data)';
+  }
 }
 // api post response msg
 class AuthorResponseEntity{
@@ -108,55 +113,123 @@ class AuthorItem{
   };
 }
 // login result
-class CourseItem{
-  String? user_token;
-  String? name;
+class Category {
+  int? categoryId;
+  String? categoryName;
   String? description;
-  String? thumbnail;
-  String? video;
-  String? price;
-  String? amount_total;
-  int? lesson_num;
-  int? video_len;
-  int? down_num;
-  int? follow;
-  int? score;
-  int? id;
 
-  CourseItem({this.user_token, this.name, this.description, this.thumbnail,
-      this.video, this.price, this.amount_total, this.lesson_num,
-      this.video_len, this.down_num, this.follow, this.score, this.id});
+  Category({this.categoryId, this.categoryName, this.description});
 
-  factory CourseItem.fromJson(Map<String, dynamic> json) =>
-    CourseItem(
-      user_token: json["user_token"],
-      name: json["name"],
-      description: json["description"],
-      thumbnail: json["thumbnail"],
-      video: json["video"],
-      price: json["price"],
-      amount_total: json["amount_total"],
-      lesson_num: json["lesson_num"],
-      video_len: json["video_len"],
-      down_num: json["down_num"],
-      follow: json["follow"],
-      score: json["score"],
-      id: json["id"],
-    );
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+    categoryId: json["categoryId"],
+    categoryName: json["categoryName"],
+    description: json["description"],
+  );
 
-  Map<String,dynamic> toJson()=>{
-    "user_token":user_token,
-    "name": name,
+  Map<String, dynamic> toJson() => {
+    "categoryId": categoryId,
+    "categoryName": categoryName,
     "description": description,
-    "thumbnail": thumbnail,
-    "video": video,
-    "price": price,
-    "amount_total":amount_total,
-    "lesson_num": lesson_num,
-    "video_len":video_len,
-    "down_num": down_num,
-    "follow": follow,
-    "score":score,
-    "id":id
   };
+  @override
+  String toString() {
+    return 'Category('
+        'categoryId: $categoryId, '
+        'categoryName: $categoryName, '
+        'description: $description'
+        ')';
+  }
+}
+
+class CourseItem {
+  final int? id;
+  final int? score;
+  final int? lessonNum;
+  final int? videoLen;
+  final int? downNum;
+  final int? follow;
+  final String? userToken;
+  final String? name;
+  final String? description;
+  final String? thumbnail;
+  final String? video;
+  final String? price;
+  final String? amountTotal;
+  final Category? categorie;
+
+  CourseItem({
+    this.id,
+    this.score,
+    this.lessonNum,
+    this.videoLen,
+    this.downNum,
+    this.follow,
+    this.userToken,
+    this.name,
+    this.description,
+    this.thumbnail,
+    this.video,
+    this.price,
+    this.amountTotal,
+    this.categorie,
+  });
+
+  factory CourseItem.fromJson(Map<String, dynamic> json) {
+    return CourseItem(
+      id: json['id'],
+      score: json['score'],
+      lessonNum: json['lessonNum'],
+      videoLen: json['videoLen'],
+      downNum: json['downNum'],
+      follow: json['follow'],
+      userToken: json['userToken'],
+      name: json['name'],
+      description: json['description'],
+      thumbnail: json['thumbnail'],
+      video: json['video'],
+      price: json['price'],
+      amountTotal: json['amountTotal'],
+      categorie: json['categorie'] != null
+          ? Category.fromJson(json['categorie'])
+          : null,
+    );
+  }
+  // Method to convert CourseItem instance into JSON format
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'score': score,
+    'lessonNum': lessonNum,
+    'videoLen': videoLen,
+    'downNum': downNum,
+    'follow': follow,
+    'userToken': userToken,
+    'name': name,
+    'description': description,
+    'thumbnail': thumbnail,
+    'video': video,
+    'price': price,
+    'amountTotal': amountTotal,
+    'categorie': categorie?.toJson(), // Assuming Category has a toJson method
+  };
+  @override
+  String toString() {
+    return 'CourseItem('
+        'id: $id, '
+        'score: $score, '
+        'lessonNum: $lessonNum, '
+        'videoLen: $videoLen, '
+        'downNum: $downNum, '
+        'follow: $follow, '
+        'userToken: $userToken, '
+        'name: $name, '
+        'description: $description, '
+        'thumbnail: $thumbnail, '
+        'video: $video, '
+        'price: $price, '
+        'amountTotal: $amountTotal, '
+        'categorie: ${categorie?.toString()}'
+        ')';
+  }
+
+
 }

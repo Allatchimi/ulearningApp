@@ -80,7 +80,7 @@ class ProfileScreen extends StatelessWidget {
                     "My Course List",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  LessonInfo(),
+                //  LessonInfo(),
                   /*ListView(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),

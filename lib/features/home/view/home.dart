@@ -18,7 +18,8 @@ class _HomsState extends ConsumerState<Home> {
 
   @override
   void didChangeDependencies() {
-    _controller = PageController(initialPage: ref.watch(homeScreenBannerDotsProvider));
+    _controller =
+        PageController(initialPage: ref.watch(homeScreenBannerDotsProvider));
     super.didChangeDependencies();
   }
 
@@ -26,27 +27,34 @@ class _HomsState extends ConsumerState<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: homeAppBar(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10.h,),
-              const HelloText(),
-              const UserName(),
-              SizedBox(height: 20.h),
-              searchBar(),
-              SizedBox(height: 15.h),
-             HomeBanner(ref: ref, controller: _controller),
-             // SizedBox(height: 5.h,),
-              const HomeMenuBar(),
-               const CourseItemGrid(),
-            ],
+      appBar: homeAppBar(ref),
+      body: RefreshIndicator(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 10.h,
+                ),
+                const HelloText(),
+                UserName(ref: ref),
+                SizedBox(height: 20.h),
+                searchBar(),
+                SizedBox(height: 20.h),
+                HomeBanner(ref: ref, controller: _controller),
+                // SizedBox(height: 5.h,),
+                const HomeMenuBar(),
+                CourseItemGrid(ref: ref),
+              ],
+            ),
           ),
         ),
+        onRefresh: () {
+          return ref.refresh(homeCourseListProvider.notifier).fetchCourseList();
+        },
       ),
     );
   }

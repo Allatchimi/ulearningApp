@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:ulearning_app/global.dart';
 
+import 'constants.dart';
+
 class HttpUtil {
   late Dio dio;
   static final HttpUtil _instance = HttpUtil._internal();
@@ -11,7 +13,7 @@ class HttpUtil {
 
   HttpUtil._internal() {
     BaseOptions options = BaseOptions(
-      baseUrl: "http://127.0.0.1:8080", // Utilisez l'adresse IP correcte
+      baseUrl: AppConstants.SERVER_API_URL, // Utilisez l'adresse IP correcte
      // baseUrl: "http://10.0.2.2:8080",
       connectTimeout: const Duration(seconds: 15), // Augmentez le timeout si nécessaire
       receiveTimeout: const Duration(seconds: 15),
@@ -23,11 +25,12 @@ class HttpUtil {
 
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
-        print("Request data: ${options.data}");
+       // print("Request data: ${options.data}");
         return handler.next(options);
       },
       onResponse: (response, handler) {
-        print("Response data: ${response.data}");
+       // print("Response data: ${response.data}");
+       // print("Response data type: ${response.data.runtimeType}");
         return handler.next(response);
       },
       onError: (DioException e, handler) async {
@@ -85,8 +88,8 @@ class HttpUtil {
         options: requestOptions,
       );
 
-      print("Response status: ${response.statusCode}"); // Log du statut de la réponse
-     // print("Response data: ${response.data}"); // Log des données de la réponse
+     // print("Response status: ${response.statusCode}"); // Log du statut de la réponse
+    //  print("Response data: ${response.data}"); // Log des données de la réponse
       return response.data;
     } catch (e) {
       print("Dio error: $e");

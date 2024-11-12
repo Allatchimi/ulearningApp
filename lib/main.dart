@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,8 +6,6 @@ import 'package:ulearning_app/common/utils/app_style.dart';
 
 import 'common/utils/http_util.dart';
 import 'global.dart';
-
-
 
 
 Future<void> main() async {
