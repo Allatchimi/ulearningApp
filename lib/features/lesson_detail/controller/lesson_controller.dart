@@ -1,38 +1,77 @@
+import 'dart:io';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ulearning_app/common/models/lesson_entities.dart';
 import 'package:ulearning_app/features/lesson_detail/repo/lesson_repo.dart';
+import 'package:video_player/video_player.dart';
+
 part 'lesson_controller.g.dart';
-/*
-@riverpod
-Future<CourseItem?> courseDetailController(CourseDetailControllerRef ref,
-    {required int index}) async {
-  // Pass the index directly as the ID
-  final response = await CourseRepo.courseDetail(id: index);
-  // Check if response or data is null before accessing
-  // print("Response data dans controller : ${response}");
 
-  if (response != null && response.code == 200 && response.data != null) {
-    return response.data;
-  } else {
-    print("for course Request failed with code: ${response?.code ?? 'No response'} or data is null");
-  }
-  return null;
-}*/
+// Define a nullable VideoPlayerController at the top level
+VideoPlayerController? videoPlayerController;
 
 @riverpod
-Future<List<LessonVideoItem>?> courseLessonDetailController(
-    CourseLessonDetailControllerRef ref,
-    {required int index}) async {
+Future<List<LessonVideoItem>?> lessonDetailController(
+    LessonDetailControllerRef ref, {
+      required int index,
+    }) async {
+  final response = await LessonRepo.LessonDetail(id: index);
 
-  // Get the list of lessons for the course by ID
-  final response = await LessonRepo.courseLessonDetail(id: index);
-
-  // Check if response is not null and is a non-empty list
   if (response != null && response.isNotEmpty) {
-    return response;
+    String url = response.first.url ?? ''; // Assuming URL is the local file path
+
+    if (url.isNotEmpty) {
+      if (videoPlayerController != null) {
+        await videoPlayerController!.dispose();
+      }
+
+      final file = File(url);
+      if (file.existsSync()) {
+        // Initialize VideoPlayerController with the local file
+        videoPlayerController = VideoPlayerController.file(file);
+
+        try {
+          await videoPlayerController!.initialize();
+        } catch (e) {
+          print("Erreur d'initialisation de la vidéo: $e");
+          return null;
+        }
+
+        // Create LessonVideo instance with the initialized controller
+        LessonVideo videoInstance = LessonVideo(
+          lessonItem: response,
+          isPlay: false,
+          initializeVideoPlayer: videoPlayerController,
+          url: url,
+        );
+
+        // Update lesson data with the new video instance
+        ref.read(lessonDataControllerProvider.notifier).updateLessonData(videoInstance);
+        return response;
+      } else {
+        print("Le fichier vidéo n'existe pas à l'emplacement : $url");
+      }
+    } else {
+      print("Erreur: L'URL est vide pour l'ID de la vidéo: $index");
+    }
   } else {
-    print("Request failed: Response is null or empty for video ID: $index");
+    print("Échec de la requête: la réponse est nulle ou vide pour l'ID de la vidéo: $index");
   }
   return null;
 }
+@riverpod
+class LessonDataController extends _$LessonDataController {
+  @override
+  FutureOr<LessonVideo> build() async {
+    return LessonVideo();
+  }
 
+  // Method to update lesson video data
+  void updateLessonData(LessonVideo lessonVideo) {
+    update((data) => data.copyWith(
+      url: lessonVideo.url,
+      lessonItem: lessonVideo.lessonItem,
+      initializeVideoPlayer: lessonVideo.initializeVideoPlayer,
+    ));
+  }
+}

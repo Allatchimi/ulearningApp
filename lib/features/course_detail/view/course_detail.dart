@@ -50,7 +50,7 @@ class _CourseDetailState extends ConsumerState<CourseDetail> {
                             CourseDetailIconText(courseItem: data),
                             CourseDetailDescription(courseItem: data),
                             const CourseDetailGoBuyButton(),
-                            CourseDetailIncludes(courseItem: data,)
+                            CourseDetailIncludes(courseItem: data)
                           ],
                         );
                 },
@@ -64,6 +64,7 @@ class _CourseDetailState extends ConsumerState<CourseDetail> {
                 },
               ),
               lessonData.when(
+                /*
                 data: (data) {
                   // Use 'data' safely, as it can be null.
                   if (data == null) {
@@ -73,7 +74,9 @@ class _CourseDetailState extends ConsumerState<CourseDetail> {
                   } else {
                     return LessonInfo(lessonData: data);
                   }
-                },
+                },*/
+                data: (data) => data==null? const SizedBox()
+                :LessonInfo(lessonData: data,ref:ref),
                 error: (error, stackTrace) {
                   // Display an error message
                   return const Center(child: Text("Error loading the  lesson  data"));

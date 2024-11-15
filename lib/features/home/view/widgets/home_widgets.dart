@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -195,9 +197,13 @@ class CourseItemGrid extends StatelessWidget {
             // Assurez-vous que les données existent et vérifiez si elles ne sont pas nulles
             final courseItem = data?[index];
             final imagePath = courseItem?.thumbnail ?? ImageRes.defaultImage;
+            final imageProvider = File(imagePath).existsSync()
+                ? FileImage(File(imagePath))
+                : AssetImage(ImageRes.defaultImage) as ImageProvider;
 
             return AppBoxDecoratioonImage(
               imagePath: imagePath,
+              imageProvider: imageProvider,
               fit: BoxFit.fitWidth,
               courseItem: data![index],
               func: () {
@@ -234,7 +240,7 @@ AppBar homeAppBar(WidgetRef ref) {
           const Icon(Icons.menu),
           profileState.when(
               data: (value) => GestureDetector(
-                    child: const AppBoxDecoratioonImage(
+                    child: AppBoxDecoratioonImage(
                       imagePath: ImageRes.profile,
                     ),
                   ),

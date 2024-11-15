@@ -6,7 +6,6 @@ class CourseAPI {
     try {
       // Effectuer la requête POST
       var response = await HttpUtil().post('api/cour/getAllCours');
-
       // Vérifiez que la réponse est bien une liste
       if (response is List) {
         // Mappez chaque élément de la liste à un objet CourseItem

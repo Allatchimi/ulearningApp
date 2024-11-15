@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/models/course_entities.dart';
 import 'package:ulearning_app/common/models/lesson_entities.dart';
@@ -8,6 +9,7 @@ import 'package:ulearning_app/common/widgets/app_shadow.dart';
 import 'package:ulearning_app/common/widgets/button_widgets.dart';
 import 'package:ulearning_app/common/widgets/image_widgets.dart';
 import 'package:ulearning_app/common/widgets/text_widgets.dart';
+import 'package:ulearning_app/features/lesson_detail/controller/lesson_controller.dart';
 
 
 
@@ -191,7 +193,8 @@ class CourseInfo extends StatelessWidget {
 
 class LessonInfo extends StatelessWidget {
   final List<Lesson> lessonData;
-  const LessonInfo({super.key,required this.lessonData});
+  final WidgetRef ref;
+  const LessonInfo({super.key,required this.lessonData,required this.ref});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -199,11 +202,15 @@ class LessonInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text14Normal(
+          lessonData.isNotEmpty?const Text14Normal(
             text: "Lesson List",
             color: AppColors.primaryText,
             fontWeight: FontWeight.bold ,
-          ),
+          ):const Text14Normal(
+            text: "Lesson List is Empty",
+            color: AppColors.primaryText,
+            fontWeight: FontWeight.bold ,
+          ), 
           SizedBox(height: 10.h),
           ListView.builder(
             shrinkWrap: true,
@@ -223,6 +230,7 @@ class LessonInfo extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: (){
+                    ref.watch(lessonDetailControllerProvider(index: lessonData[index].id!));
                     Navigator.of(context).pushNamed("/lesson_detail",
                         arguments: {
                         "id":lessonData[index].id

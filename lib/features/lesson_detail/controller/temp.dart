@@ -40,7 +40,7 @@ class _LessonDetailState extends ConsumerState<LessonDetail> {
     return Scaffold(
       appBar: buildAppBar(text: "Lesson detail"),
       body: Padding(
-        padding: EdgeInsets.only(top: 10.h, left: 25.w, right: 25.w),
+        padding: EdgeInsets.only(top:10.h,left: 25.w, right: 25.w),
         child: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -48,21 +48,33 @@ class _LessonDetailState extends ConsumerState<LessonDetail> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 lessonData.when(
-                  data: (data) {
-                    if (data.initializeVideoPlayer == null) {
-                      return const Center(child: Text("Video player is not initialized"));
-                    }
-                    return Container(
-                      width: 325.w,
-                      height: 200.h,
-                      child: data.initializeVideoPlayer!.value.isInitialized
-                          ? VideoPlayer(data.initializeVideoPlayer!)
-                          : const Center(child: CircularProgressIndicator()),
-                    );
-                  },
+                  data: (data) =>Container(
+                    width: 325.w,
+                    height: 200.h,
+                    child: FutureBuilder(
+                      future: videoPlayerController?.initialize(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return videoPlayerController == null
+                              ? Container()
+                              : Stack(
+                            children: [
+                              VideoPlayer(videoPlayerController!),
+                            ],
+                          );
+                        } else {
+                          print("erreur de chargement");
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
+                  ),
                   error: (error, stackTrace) {
                     return const Center(
-                      child: Text("Erreur lors du chargement des données de la leçon"),
+                      child: Text(
+                          "Erreur lors du chargement des données de la leçon"),
                     );
                   },
                   loading: () {
@@ -79,31 +91,18 @@ class _LessonDetailState extends ConsumerState<LessonDetail> {
                         width: 25.w,
                         height: 25.h,
                         imagePath: ImageRes.precedant,
-                       // onTap: () {
-                          // Handle previous video logic},
                       ),
                       SizedBox(width: 15.h),
                       AppImage(
                         width: 25.w,
                         height: 25.h,
                         imagePath: ImageRes.play,
-                       /* onTap: () {
-                          if (videoPlayerController != null) {
-                            if (videoPlayerController!.value.isPlaying) {
-                              videoPlayerController!.pause();
-                            } else {
-                              videoPlayerController!.play();
-                            }
-                          }
-                        },*/
                       ),
                       SizedBox(width: 15.h),
                       AppImage(
                         width: 25.w,
                         height: 25.h,
                         imagePath: ImageRes.suivant,
-                       // onTap: () {
-                          // Handle next video logic},
                       ),
                     ],
                   ),

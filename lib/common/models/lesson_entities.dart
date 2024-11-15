@@ -1,4 +1,5 @@
 import 'package:ulearning_app/common/models/course_entities.dart';
+import 'package:video_player/video_player.dart';
 
 class LessonVideoItem {
   final String? name;
@@ -33,28 +34,33 @@ class LessonVideoItem {
     return 'LessonVideoItem{name: $name, url: $url, thumbnail: $thumbnail, lessonName: $lessonName, lessonId: $lessonId, id: $id}';
   }
 }
-
 class LessonVideo {
   final List<LessonVideoItem> lessonItem;
-  final Future<void>? initializeVideoPlayer;
+  final VideoPlayerController? initializeVideoPlayer; // Changed to VideoPlayerController
   final bool isPlay;
+  final String? url;
 
-  LessonVideo(
-      {this.lessonItem = const <LessonVideoItem>[],
-      this.initializeVideoPlayer,
-      this.isPlay = false});
-  LessonVideo copyWith(
-      {List<LessonVideoItem>? lessonItem,
-      Future<void>? initializeVideoPlayer,
-      bool? isPlay}) {
+  LessonVideo({
+    this.lessonItem = const <LessonVideoItem>[],
+    this.initializeVideoPlayer,
+    this.isPlay = false,
+    this.url = "",
+  });
+
+  LessonVideo copyWith({
+    List<LessonVideoItem>? lessonItem,
+    VideoPlayerController? initializeVideoPlayer, // Updated this field
+    bool? isPlay,
+    String? url,
+  }) {
     return LessonVideo(
-        lessonItem: lessonItem ?? this.lessonItem,
-        initializeVideoPlayer:
-            initializeVideoPlayer ?? this.initializeVideoPlayer,
-        isPlay: isPlay ?? this.isPlay);
+      lessonItem: lessonItem ?? this.lessonItem,
+      initializeVideoPlayer: initializeVideoPlayer ?? this.initializeVideoPlayer,
+      isPlay: isPlay ?? this.isPlay,
+      url: url ?? this.url,
+    );
   }
 }
-
 //login result
 class LessonItem{
   String? name;

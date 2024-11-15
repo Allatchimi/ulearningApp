@@ -89,7 +89,7 @@ class HttpUtil {
       );
 
      // print("Response status: ${response.statusCode}"); // Log du statut de la réponse
-    //  print("Response data: ${response.data}"); // Log des données de la réponse
+    // print("Response data: ${response.data}"); // Log des données de la réponse
       return response.data;
     } catch (e) {
       print("Dio error: $e");
