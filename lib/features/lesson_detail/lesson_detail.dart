@@ -49,21 +49,41 @@ class _LessonDetailState extends ConsumerState<LessonDetail> {
               children: [
                 lessonData.when(
                   data: (data) {
+                    // Vérifiez si le contrôleur de vidéo est initialisé
                     if (data.initializeVideoPlayer == null) {
-                      return const Center(child: Text("Video player is not initialized"));
+                      return const Center(child: Text("Le lecteur vidéo n'est pas initialisé"));
                     }
+
+                    // Utilisez FutureBuilder avec un Future<VideoPlayerController>
                     return Container(
                       width: 325.w,
                       height: 200.h,
-                      child: data.initializeVideoPlayer!.value.isInitialized
-                          ? VideoPlayer(data.initializeVideoPlayer!)
-                          : const Center(child: CircularProgressIndicator()),
+                      child: FutureBuilder<VideoPlayerController>(
+                        future: Future.value(data.initializeVideoPlayer!), // Wrap it in a Future
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            if (snapshot.hasError) {
+                              return const Center(child: Text("Erreur lors de l'initialisation de la vidéo"));
+                            }
+
+                            // Si la vidéo est initialisée, affichez le lecteur vidéo
+                            VideoPlayerController controller = snapshot.data!;
+                            // Lire la vidéo automatiquement après l'initialisation
+                            if (!controller.value.isPlaying) {
+                              controller.play(); // Démarrer la lecture de la vidéo
+                            }
+
+                            return VideoPlayer(controller);
+                          } else {
+                            // Pendant l'initialisation, montrez un indicateur de chargement
+                            return const Center(child: CircularProgressIndicator());
+                          }
+                        },
+                      ),
                     );
                   },
                   error: (error, stackTrace) {
-                    return const Center(
-                      child: Text("Erreur lors du chargement des données de la leçon"),
-                    );
+                    return const Center(child: Text("Erreur lors du chargement des données"));
                   },
                   loading: () {
                     return const Center(child: CircularProgressIndicator());
