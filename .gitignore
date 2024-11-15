@@ -18,6 +18,9 @@ migrate_working_dir/
 
 /assets/images/
 /assets/icons/*.*
+/assets/videos/
+/assets/voices/
+/assets/fonts/
 
 
 # The .vscode folder contains launch configuration and tasks you configure in
