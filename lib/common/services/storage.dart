@@ -24,7 +24,10 @@ class StorageServices{
   Future<bool> setBool(String key, bool value) async {
     return await _pref.setBool(key, value);
   }
-
+  
+  Future<bool> remove(String key){
+    return _pref.remove(key);
+  }
   bool getDeviceFirstOpen(){
     return _pref.getBool(AppConstants.STORAGE_DEVICE_OPEN_FIRST_KEY)??false;
   }

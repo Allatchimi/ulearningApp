@@ -14,99 +14,96 @@ import '../../../common/widgets/pop_messages.dart';
 import '../../../global.dart';
 
 class SignInController {
-  SignInController();
+  
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-/*
-  Future<void> handleSignIn(WidgetRef ref) async {
+
+  Future<void> handleSignIn(WidgetRef ref, {bool isSocialLogin = false}) async {
     var state = ref.read(signInNotifierProvider);
     String email = state.email;
     String password = state.password;
 
-    // Validation des champs
-    if (email.isEmpty) {
-      toastInfo("Your email is empty");
-      return;
-    }
-
-    if (password.isEmpty) {
-      toastInfo("Your Password is empty");
-      return;
+    // Validation
+    if (!isSocialLogin) {
+      if (email.isEmpty) {
+        toastInfo("Your email is empty");
+        return;
+      }
+      if (password.isEmpty) {
+        toastInfo("Your Password is empty");
+        return;
+      }
     }
 
     ref.read(appLoaderProvider.notifier).setLoaderValue(true);
 
     try {
-      // Authentification avec Firebase
-      final credential = await SignInRepo.firebaseSignIn(email, password);
-
-      if (credential.user != null) {
-        // Récupérer le token ID de Firebase
-        String? idToken = await credential.user?.getIdToken();
-        if (idToken != null) {
-          // Utiliser les informations de l'utilisateur pour demander un JWT à votre API
-          await handleLoginWithAPI(email, password);
-        } else {
-          toastInfo("Failed to retrieve Firebase ID token");
-        }
+      LoginResponse? response;
+      
+      if (isSocialLogin) {
+        // Implémentez la logique pour les connexions sociales ici
+        // Cela dépendra de votre implémentation Firebase et backend
       } else {
-        toastInfo("Login error: User not found");
+        // Option 1: Authentification directe avec votre backend
+        response = await _loginWithBackend(email, password);
+        
+        // Option 2: Authentification Firebase puis backend (décommentez si nécessaire)
+        // response = await _loginWithFirebaseThenBackend(email, password);
       }
-    } on FirebaseAuthException catch (e) {
-      handleFirebaseError(e);
+
+      if (response != null && response.accessToken != null) {
+        await _processSuccessfulLogin(response);
+      } else {
+        toastInfo(response?.message ?? "Authentication error");
+      }
     } catch (e) {
-      if (kDebugMode) {
-        print("Error: $e");
-      }
+      print("Sign in error: $e");
       toastInfo("An unexpected error occurred. Please try again.");
     } finally {
       ref.read(appLoaderProvider.notifier).setLoaderValue(false);
     }
   }
-*/
-  Future<void> handleLoginWithAPI(WidgetRef ref) async {
-    var state = ref.read(signInNotifierProvider);
-    String email = state.email;
-    String password = state.password;
 
-    if (email.isEmpty) {
-      toastInfo("Your email is empty");
-      return;
-    }
-
-    if (password.isEmpty) {
-      toastInfo("Your Password is empty");
-      return;
-    }
-
-    ref.read(appLoaderProvider.notifier).setLoaderValue(true);
-
-    // Créer une requête de connexion pour votre API
+  Future<LoginResponse?> _loginWithBackend(String email, String password) async {
     LoginRequest request = LoginRequest(email: email, password: password);
-
-    // Appel à l'API pour obtenir un JWT
-    LoginResponse? response = await SignInRepo.login(request);
-
-    if (response != null && response.accessToken != null) {
-      await SignInRepo.saveToken(response.accessToken!);
-      Global.storageServices.setString(AppConstants.STORAGE_USER_TOKEN_KEY, response.accessToken!);
-
-      // Décoder le token et sauvegarder le nom d'utilisateur
-      String? username = decodeJWT(response.accessToken!);
-      if (username != null) {
-        Global.storageServices.setString(AppConstants.STORAGE_USER_PROFILE_KEY, username);
-      }
-
-      // Navigation vers l'écran principal de l'application
-      navKey.currentState?.pushNamedAndRemoveUntil("/application", (route) => false);
-    } else {
-      toastInfo(response?.message ?? "Authentication error");
-    }
-
-    ref.read(appLoaderProvider.notifier).setLoaderValue(false);
+    return await SignInRepo.loginWithEmailPassword(request);
   }
 
+  Future<LoginResponse?> _loginWithFirebaseThenBackend(String email, String password) async {
+    try {
+      // 1. Authentification Firebase
+      final credential = await SignInRepo.firebaseSignIn(email, password);
+      if (credential.user == null) return null;
+      
+      // 2. Récupération du token Firebase
+      String? idToken = await credential.user?.getIdToken();
+      if (idToken == null) return null;
+      
+      // 3. Authentification avec le backend utilisant le token Firebase
+      return await SignInRepo.loginWithFirebaseToken(idToken);
+    } on FirebaseAuthException catch (e) {
+      handleFirebaseError(e);
+      return null;
+    }
+  }
 
+  Future<void> _processSuccessfulLogin(LoginResponse response) async {
+    await SignInRepo.saveToken(response.accessToken!);
+    Global.storageServices.setString(
+      AppConstants.STORAGE_USER_TOKEN_KEY, 
+      response.accessToken!
+    );
+    
+    String? username = decodeJWT(response.accessToken!);
+    if (username != null) {
+      Global.storageServices.setString(
+        AppConstants.STORAGE_USER_PROFILE_KEY, 
+        username
+      );
+    }
+    
+    navKey.currentState?.pushNamedAndRemoveUntil("/application", (route) => false);
+  }
   void handleFirebaseError(FirebaseAuthException e) {
     switch (e.code) {
       case 'user-not-found':

@@ -53,33 +53,82 @@ class _LessonDetailState extends ConsumerState<LessonDetail> {
                     if (data.initializeVideoPlayer == null) {
                       return const Center(child: Text("Le lecteur vidéo n'est pas initialisé"));
                     }
-
                     // Utilisez FutureBuilder avec un Future<VideoPlayerController>
-                    return Container(
-                      width: 325.w,
-                      height: 200.h,
-                      child: FutureBuilder<VideoPlayerController>(
-                        future: Future.value(data.initializeVideoPlayer!), // Wrap it in a Future
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            if (snapshot.hasError) {
-                              return const Center(child: Text("Erreur lors de l'initialisation de la vidéo"));
-                            }
+                    return Column(
+                      children: [
+                        Container(
+                          width: 325.w,
+                          height: 200.h,
+                          child: FutureBuilder<VideoPlayerController>(
+                            future: Future.value(data.initializeVideoPlayer!), // Wrap it in a Future
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.done) {
+                                if (snapshot.hasError) {
+                                  return const Center(child: Text("Erreur lors de l'initialisation de la vidéo"));
+                                }
 
-                            // Si la vidéo est initialisée, affichez le lecteur vidéo
-                            VideoPlayerController controller = snapshot.data!;
-                            // Lire la vidéo automatiquement après l'initialisation
-                            if (!controller.value.isPlaying) {
-                              controller.play(); // Démarrer la lecture de la vidéo
-                            }
+                                // Si la vidéo est initialisée, affichez le lecteur vidéo
+                                VideoPlayerController controller = snapshot.data!;
+                                // Lire la vidéo automatiquement après l'initialisation
+                                if (!controller.value.isPlaying) {
+                                 controller.play(); // Démarrer la lecture de la vidéo
+                                }
 
-                            return VideoPlayer(controller);
-                          } else {
-                            // Pendant l'initialisation, montrez un indicateur de chargement
-                            return const Center(child: CircularProgressIndicator());
-                          }
-                        },
-                      ),
+                                return VideoPlayer(controller);
+                              } else {
+                                // Pendant l'initialisation, montrez un indicateur de chargement
+                                return const Center(child: CircularProgressIndicator());
+                              }
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+
+                                },
+                                child: AppImage(
+                                  width: 25.w,
+                                  height: 25.h,
+                                  imagePath: ImageRes.precedant,
+                                ),
+                              ),
+                              SizedBox(width: 15.h),
+                              GestureDetector(
+                                onTap: () {
+                                  if(!data.isPlay){
+                                    videoPlayerController?.pause();
+                                    print("mise en pause");
+                                  }else{
+                                    videoPlayerController?.play();
+                                    print("mise en marche ");
+                                  }
+                                },
+                                child: AppImage(
+                                  width: 25.w,
+                                  height: 25.h,
+                                  imagePath: ImageRes.play,
+                                ),
+                              ),
+                              SizedBox(width: 15.h),
+                              GestureDetector(
+                                onTap: () {
+                                  // Handle next video logic
+                                },
+                                child: AppImage(
+                                  width: 25.w,
+                                  height: 25.h,
+                                  imagePath: ImageRes.suivant,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     );
                   },
                   error: (error, stackTrace) {
@@ -89,46 +138,9 @@ class _LessonDetailState extends ConsumerState<LessonDetail> {
                     return const Center(child: CircularProgressIndicator());
                   },
                 ),
-                SizedBox(height: 10.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AppImage(
-                        width: 25.w,
-                        height: 25.h,
-                        imagePath: ImageRes.precedant,
-                       // onTap: () {
-                          // Handle previous video logic},
-                      ),
-                      SizedBox(width: 15.h),
-                      AppImage(
-                        width: 25.w,
-                        height: 25.h,
-                        imagePath: ImageRes.play,
-                       /* onTap: () {
-                          if (videoPlayerController != null) {
-                            if (videoPlayerController!.value.isPlaying) {
-                              videoPlayerController!.pause();
-                            } else {
-                              videoPlayerController!.play();
-                            }
-                          }
-                        },*/
-                      ),
-                      SizedBox(width: 15.h),
-                      AppImage(
-                        width: 25.w,
-                        height: 25.h,
-                        imagePath: ImageRes.suivant,
-                       // onTap: () {
-                          // Handle next video logic},
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10.h),
+                //SizedBox(height: 10.h),
+
+               // SizedBox(height: 10.h),
                 // Integration of video list
                 lessonDetail.when(
                   data: (data) {

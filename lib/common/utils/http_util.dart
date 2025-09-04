@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:ulearning_app/global.dart';
 
 import 'constants.dart';
@@ -25,7 +26,7 @@ class HttpUtil {
 
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
-       // print("Request data: ${options.data}");
+        debugPrint("Complete URL: ${options.uri}"); 
         return handler.next(options);
       },
       onResponse: (response, handler) {
@@ -34,9 +35,9 @@ class HttpUtil {
         return handler.next(response);
       },
       onError: (DioException e, handler) async {
-        print("URL: ${e.requestOptions.uri}");
-        print("Request data: ${e.requestOptions.data}");
-        print("Response data: ${e.response?.data}");
+        debugPrint("URL: ${e.requestOptions.uri}");
+        debugPrint("Request data: ${e.requestOptions.data}");
+        debugPrint("Response data: ${e.response?.data}");
 
         ErrorEntity eInfo = createErrorEntity(e);
         onError(eInfo);

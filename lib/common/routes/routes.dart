@@ -6,6 +6,7 @@ import 'package:ulearning_app/features/home/view/home.dart';
 import 'package:ulearning_app/features/profil/view/course.dart';
 import 'package:ulearning_app/features/profil/view/profil.dart';
 import 'package:ulearning_app/features/profil/view/your_course.dart';
+import 'package:ulearning_app/features/profile/settings/settings_page.dart';
 
 import '../../features/application/view/application.dart';
 import '../../features/lesson_detail/lesson_detail.dart';
@@ -28,6 +29,7 @@ class AppPages {
       RouteEntity(path: AppRoutesNames.PROFIL, page:  ProfileScreen()),
       RouteEntity(path: AppRoutesNames.COURS, page:  CoursesScreen()),
       RouteEntity(path: AppRoutesNames.YOURCOURS, page:  YourCoursesScreen()),
+      RouteEntity(path: AppRoutesNames.SETTINGS, page:  SettingsPage()),
     ];
   }
 

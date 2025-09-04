@@ -40,7 +40,7 @@ Future<List<LessonVideoItem>?> lessonDetailController(
         // Create LessonVideo instance with the initialized controller
         LessonVideo videoInstance = LessonVideo(
           lessonItem: response,
-          isPlay: false,
+          isPlay: true,
           initializeVideoPlayer: videoPlayerController,
           url: url,
         );

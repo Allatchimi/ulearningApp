@@ -207,11 +207,8 @@ class CourseItemGrid extends StatelessWidget {
               fit: BoxFit.fitWidth,
               courseItem: data![index],
               func: () {
-              Navigator.of(context).pushNamed("/course_detail",
-              arguments: {
-                "id":data[index].id!
-              }
-              );
+                Navigator.of(context).pushNamed("/course_detail",
+                    arguments: {"id": data[index].id!});
               },
             );
           },

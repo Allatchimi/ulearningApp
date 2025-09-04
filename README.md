@@ -73,7 +73,7 @@ Après avoir configuré Git pour faire un fast-forward, vous pouvez essayer à n
    ```
 git config --global credential.helper osxkeychain
    ```
-5. 
+
 
 
 # Titre principal

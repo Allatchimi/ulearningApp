@@ -10,4 +10,5 @@ class AppRoutesNames{
   static const String PROFIL = "/profil";
   static const String COURS = "/cours";
   static const String YOURCOURS = "/your_cours";
+  static const String SETTINGS = "/settings";
 }
