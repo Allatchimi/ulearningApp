@@ -5,6 +5,7 @@ import 'package:ulearning_app/common/models/login.dart';
 import 'package:ulearning_app/common/utils/http_util.dart';
 
 class SignInRepo {
+  
   static Future<UserCredential> firebaseSignIn(
       String email, String password) async {
     final credential = await FirebaseAuth.instance
@@ -36,7 +37,7 @@ class SignInRepo {
     try {
       final response = await HttpUtil().post(
         '/api/auth/firebase-login', // Endpoint backend pour Firebase auth
-        data: {'token': idToken},
+        data: {'idToken': idToken},
       );
 
       if (response is Map<String, dynamic> &&
@@ -72,8 +73,7 @@ class SignInRepo {
       return null;
     }
   }
-  
-// Dans sign_in_repo.dart - Ajoutez ces méthodes
+
   static Future<LoginResponse?> loginWithGoogle() async {
     // Implémentez la logique Google Sign-In ici
     // 1. Authentification avec Google via Firebase
@@ -88,7 +88,7 @@ class SignInRepo {
   static Future<LoginResponse?> loginWithApple() async {
     // Implémentez la logique Apple Sign-In ici
   }
-  
+
   static Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);

@@ -46,7 +46,7 @@ class _SignInState extends ConsumerState<SignIn> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //top login buttons
-                      thirdPartyLogin(),
+                      thirdPartyLogin(ref,_controller),
                       //more login options message
                       const Center(
                           child: Text14Normal(
@@ -91,7 +91,7 @@ class _SignInState extends ConsumerState<SignIn> {
                       Center(
                           child: AppButton(
                         buttonName: "Login",
-                        func: () => _controller.handleLoginWithAPI(ref),
+                        func: () => _controller.handleSignIn(ref),
                       )),
                       SizedBox(
                         height: 20.h,

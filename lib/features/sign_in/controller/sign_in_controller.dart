@@ -14,7 +14,7 @@ import '../../../common/widgets/pop_messages.dart';
 import '../../../global.dart';
 
 class SignInController {
-  
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -45,10 +45,10 @@ class SignInController {
         // Cela dépendra de votre implémentation Firebase et backend
       } else {
         // Option 1: Authentification directe avec votre backend
-        response = await _loginWithBackend(email, password);
+        //response = await _loginWithBackend(email, password);
         
         // Option 2: Authentification Firebase puis backend (décommentez si nécessaire)
-        // response = await _loginWithFirebaseThenBackend(email, password);
+         response = await _loginWithFirebaseThenBackend(email, password);
       }
 
       if (response != null && response.accessToken != null) {
@@ -104,6 +104,7 @@ class SignInController {
     
     navKey.currentState?.pushNamedAndRemoveUntil("/application", (route) => false);
   }
+
   void handleFirebaseError(FirebaseAuthException e) {
     switch (e.code) {
       case 'user-not-found':
