@@ -7,7 +7,7 @@ part of 'course_controller.dart';
 // **************************************************************************
 
 String _$courseDetailControllerHash() =>
-    r'f5e753acfc55d504d5daf9c170db0957e6e97076';
+    r'f46679c9ff144114c61cb3d8b7661b2bc0d36110';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -161,7 +161,7 @@ class _CourseDetailControllerProviderElement
 }
 
 String _$courseLessonListControllerHash() =>
-    r'281f5387e50c20a5f04a2353e6c63e203ed26a70';
+    r'5d8b44e3b9b79b419a4f565bd9e02f8bd6c26144';
 
 /// See also [courseLessonListController].
 @ProviderFor(courseLessonListController)
@@ -169,7 +169,7 @@ const courseLessonListControllerProvider = CourseLessonListControllerFamily();
 
 /// See also [courseLessonListController].
 class CourseLessonListControllerFamily
-    extends Family<AsyncValue<List<Lesson>?>> {
+    extends Family<AsyncValue<List<Lesson>>> {
   /// See also [courseLessonListController].
   const CourseLessonListControllerFamily();
 
@@ -208,7 +208,7 @@ class CourseLessonListControllerFamily
 
 /// See also [courseLessonListController].
 class CourseLessonListControllerProvider
-    extends AutoDisposeFutureProvider<List<Lesson>?> {
+    extends AutoDisposeFutureProvider<List<Lesson>> {
   /// See also [courseLessonListController].
   CourseLessonListControllerProvider({
     required int index,
@@ -243,7 +243,7 @@ class CourseLessonListControllerProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<Lesson>?> Function(CourseLessonListControllerRef provider)
+    FutureOr<List<Lesson>> Function(CourseLessonListControllerRef provider)
         create,
   ) {
     return ProviderOverride(
@@ -261,7 +261,7 @@ class CourseLessonListControllerProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<Lesson>?> createElement() {
+  AutoDisposeFutureProviderElement<List<Lesson>> createElement() {
     return _CourseLessonListControllerProviderElement(this);
   }
 
@@ -282,13 +282,13 @@ class CourseLessonListControllerProvider
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin CourseLessonListControllerRef
-    on AutoDisposeFutureProviderRef<List<Lesson>?> {
+    on AutoDisposeFutureProviderRef<List<Lesson>> {
   /// The parameter `index` of this provider.
   int get index;
 }
 
 class _CourseLessonListControllerProviderElement
-    extends AutoDisposeFutureProviderElement<List<Lesson>?>
+    extends AutoDisposeFutureProviderElement<List<Lesson>>
     with CourseLessonListControllerRef {
   _CourseLessonListControllerProviderElement(super.provider);
 

@@ -1,121 +1,62 @@
-
-class LoginRequestEntity {
-  int? type;
-  String? name;
+class User {
+  final int id;
+  final String name;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String provider;
+  final String profileImageUrl;
   String? description;
-  String? email;
-  String? phone;
-  String? avatar;
-  String? open_id;
-  int? online;
-
-  LoginRequestEntity(
-      {this.type,
-        this.name,
-        this.description,
-        this.email,
-        this.phone,
-        this.avatar,
-        this.open_id,
-        this.online});
-
-  Map<String, dynamic> toJson() => {
-    "type": type,
-    "name": name,
-    "description": description,
-    "email": email,
-    "phone": phone,
-    "avatar": avatar,
-    "open_id": open_id,
-    "online": online,
-  };
-}
-
-//api post response msg
-
-class UserLoginResponseEntity{
-  int? code;
-  String? msg;
-  UserProfile? data;
-
-  UserLoginResponseEntity({this.code, this.msg, this.data});
-
-  factory UserLoginResponseEntity.fromJson(Map<String, dynamic> json) =>
-    UserLoginResponseEntity(
-    code:json["code"],
-    msg: json["msg"],
-    data:UserProfile.fromJson(json["data"]),
-  );
-
-  Map<String,dynamic> toJson() =>{
-    "code": code,
-    "msg": msg,
-    "data": data,
-  };
-
-}
-
-// login result
-class UserProfile{
-  String? access_token;
-  String? token;
-  String? name;
-  String? description;
-  String? avatar;
+  final bool emailVerified;
+  final List<String> roles;
   int? online;
   int? type;
 
-  UserProfile({this.access_token, this.token, this.name, this.description,
-      this.avatar,this.type, this.online});
+  User({
+    required this.id,
+    required this.name,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.provider,
+    required this.profileImageUrl,
+    required this.emailVerified,
+    required this.roles,
+    this.description,
+    this.online,
+    this.type
+  });
 
-  factory UserProfile.fromJson(Map<String, dynamic> json){
-    if(json["access_token"].isEmpty || (json["access_token"])==null) {
-      return UserProfile();
-    }
-      return UserProfile(
-        access_token: json["access_token"],
-        token: json["token"],
-        name: json["name"],
-        description: json["description"],
-        avatar: json["avatar"],
-        online: json["online"],
-        type: json["type"],
-      );
-    }
-  Map<String,dynamic> toJson() =>{
-    "access_token": access_token,
-    "token": token,
-    "name": name,
-    "description": description,
-    "avatar": avatar,
-    "online": online,
-    "type": type,
-  };
-}
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
+      email: json['email'] as String,
+      provider: json['provider'] as String,
+      profileImageUrl: json['profileImageUrl'] as String,
+      emailVerified: json['emailVerified'] as bool,
+      roles: List<String>.from(json['roles'] as List),
+    );
+  }
 
-class UserData{
-  String? token;
-  String? name;
-  String? description;
-  String? avatar;
-  int? online;
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'provider': provider,
+      'profileImageUrl': profileImageUrl,
+      'emailVerified': emailVerified,
+      'roles': roles,
+    };
+  }
 
-  UserData({this.token, this.name, this.description, this.avatar, this.online});
-
-  factory UserData.fromJson(Map<String, dynamic> json) =>
-      UserData(
-        token: json["token"],
-        name: json["name"],
-        description: json["description"],
-        avatar: json["avatar"],
-        online:json["online"],
-      );
-
-  Map<String,dynamic> toJson() =>{
-  "token": token,
-  "name": name,
-  "description": description,
-  "avatar": avatar,
-  "online": online,
-  };
+  @override
+  String toString() {
+    return 'User{id: $id, name: $name, email: $email, roles: $roles}';
+  }
 }

@@ -8,38 +8,46 @@ part 'home_controller.g.dart';
 //flutter pub run build_runner watch --delete-conflicting-outputs
 
 @Riverpod(keepAlive: true)
-class HomeScreenBannerDots extends _$HomeScreenBannerDots{
-
+class HomeScreenBannerDots extends _$HomeScreenBannerDots {
   @override
-  int build()=>0;
+  int build() => 0;
 
-  void setIndex(int value){
+  void setIndex(int value) {
     state = value;
-  //  print(state);
+    //  print(state);
   }
 }
 
 @Riverpod(keepAlive: true)
-class HomeUserProfile extends _$HomeUserProfile{
+class HomeUserProfile extends _$HomeUserProfile {
   @override
-  FutureOr<UserProfile> build(){
-    return Global.storageServices.getUserProfile();
+  FutureOr<User> build() {
+    final user = Global.storageServices.getUserProfile();
+    return user ?? _getDefaultUser();
   }
 
+  User _getDefaultUser() {
+    return User(
+      id: 0,
+      name: "Guest",
+      firstName: "Guest",
+      lastName: "User",
+      email: "guest@example.com",
+      provider: "LOCAL",
+      profileImageUrl: "",
+      emailVerified: false,
+      roles: ["USER"],
+    );
+  }
 }
 
 @Riverpod(keepAlive: true)
 class HomeCourseList extends _$HomeCourseList {
-  // Appel asynchrone pour récupérer la liste des cours
   Future<List<CourseItem>?> fetchCourseList() async {
     try {
-      // Appel à l'API pour récupérer les cours
       final List<CourseItem> result = await CourseAPI.courseList();
-
-      // Retourner la liste des cours
       return result;
     } catch (e) {
-      // Affiche l'erreur lors de la récupération de la liste des cours
       print("Erreur lors de la récupération de la liste des cours: $e");
       return null;
     }
@@ -52,6 +60,3 @@ class HomeCourseList extends _$HomeCourseList {
     return await fetchCourseList();
   }
 }
-
-
-

@@ -64,18 +64,10 @@ class _CourseDetailState extends ConsumerState<CourseDetail> {
                 },
               ),
               lessonData.when(
-                /*
-                data: (data) {
-                  // Use 'data' safely, as it can be null.
-                  if (data == null) {
-                    return const SizedBox(
-                        child: Center(child: Text("Ce Cour n a pas de Lesson encore")),
-                    );
-                  } else {
-                    return LessonInfo(lessonData: data);
-                  }
-                },*/
-                data: (data) => data==null? const SizedBox()
+                data: (data) => data == null ? const SizedBox(
+                  child: Center(child: Text("Ce Cour n a pas de Lesson encore")),
+                    
+                )
                 :LessonInfo(lessonData: data,ref:ref),
                 error: (error, stackTrace) {
                   // Display an error message

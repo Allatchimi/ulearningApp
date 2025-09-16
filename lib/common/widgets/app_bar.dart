@@ -24,7 +24,6 @@ AppBar buildAppBar({String text =""}) {
 
 AppBar buildGlobalAppBar({String text =""}) {
   return AppBar(
-
       title: Text16Normal(
         text: text,
         color: AppColors.primaryText,

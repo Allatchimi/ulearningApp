@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/routes/app_routes_names.dart';
 import 'package:ulearning_app/common/utils/constants.dart';
 import 'package:ulearning_app/features/profile/settings/widgets/settings_widgets.dart';

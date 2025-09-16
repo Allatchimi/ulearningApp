@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:ffi';
 
 class CourseRequestEntity{
   int? id;
@@ -13,43 +14,6 @@ class SearchRequestEntity{
   Map<String,dynamic> toJson() => {"search": search};
 }
 
-class CourseListResponseEntity {
-  final String code;
-  final String msg;
-  final List<CourseItem> data;
-
-  CourseListResponseEntity({required this.code, required this.msg, required this.data});
-
-  factory CourseListResponseEntity.fromJson(Map<String, dynamic> json) {
-    return CourseListResponseEntity(
-      code: json['code'],
-      msg: json['msg'],
-      data: List<CourseItem>.from(json['data'].map((item) => CourseItem.fromJson(item))),
-    );
-  }
-}
-
-//api post response msg
-class CourseDetailResponseEntity{
-  int? code;
-  String? msg;
-  CourseItem? data;
-
-  CourseDetailResponseEntity({this.code, this.msg, this.data});
-  factory CourseDetailResponseEntity.fromJson(Map<String, dynamic> json) =>
-      CourseDetailResponseEntity(
-        code: json["code"],
-        msg: json["msg"],
-        data: CourseItem.fromJson(json["data"]),
-      );
-
-
-  @override
-  String toString() {
-    return 'CourseDetailResponseEntity(code: $code, msg: $msg, data: $data)';
-  }
-}
-// api post response msg
 class AuthorResponseEntity{
   int? code;
   String? msg;
@@ -65,6 +29,7 @@ class AuthorResponseEntity{
       );
 
 }
+
 class AuthorRequestEntity{
   String? token;
 
@@ -152,10 +117,9 @@ class CourseItem {
   final String? name;
   final String? description;
   final String? thumbnail;
-  final String? video;
-  final String? price;
+  final double? price;
   final String? amountTotal;
-  final Category? categorie;
+  final String? categoryName;
 
   CourseItem({
     this.id,
@@ -168,10 +132,9 @@ class CourseItem {
     this.name,
     this.description,
     this.thumbnail,
-    this.video,
     this.price,
     this.amountTotal,
-    this.categorie,
+    this.categoryName,
   });
 
   factory CourseItem.fromJson(Map<String, dynamic> json) {
@@ -186,12 +149,9 @@ class CourseItem {
       name: json['name'],
       description: json['description'],
       thumbnail: json['thumbnail'],
-      video: json['video'],
       price: json['price'],
       amountTotal: json['amountTotal'],
-      categorie: json['categorie'] != null
-          ? Category.fromJson(json['categorie'])
-          : null,
+      categoryName: json['categoryName'] 
     );
   }
   // Method to convert CourseItem instance into JSON format
@@ -206,10 +166,9 @@ class CourseItem {
     'name': name,
     'description': description,
     'thumbnail': thumbnail,
-    'video': video,
     'price': price,
     'amountTotal': amountTotal,
-    'categorie': categorie?.toJson(), // Assuming Category has a toJson method
+    'categoryName': categoryName // Assuming Category has a toJson method
   };
   @override
   String toString() {
@@ -224,10 +183,9 @@ class CourseItem {
         'name: $name, '
         'description: $description, '
         'thumbnail: $thumbnail, '
-        'video: $video, '
         'price: $price, '
         'amountTotal: $amountTotal, '
-        'categorie: ${categorie?.toString()}'
+        'categoryName: $categoryName'
         ')';
   }
 

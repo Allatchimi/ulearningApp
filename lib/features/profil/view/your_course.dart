@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/widgets/search_widgets.dart';
-import 'package:ulearning_app/features/course_detail/view/widgets/course_detail_widgets.dart';
 
 class YourCoursesScreen extends StatelessWidget {
+  const YourCoursesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +75,8 @@ class YourCoursesScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              searchBar(),
+             // searchBar( func: (String ) {  }),
+             searchBar(controller: TextEditingController(),onSearch: () { },),
               // Barre de recherche
               /* TextField(
                 decoration: InputDecoration(

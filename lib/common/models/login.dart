@@ -1,3 +1,5 @@
+import 'package:ulearning_app/common/models/entities.dart';
+
 class LoginRequest {
   final String email;
   final String password;
@@ -12,19 +14,25 @@ class LoginRequest {
   }
 }
 
-class LoginResponse {
-  final String? accessToken;
-  final String? refreshToken;
-  final String? message;
+class LoginResponseData {
+  final String accessToken;
+  final String refreshToken;
+  final User user;
+  final String expiresAt;
 
-  LoginResponse({this.accessToken, this.refreshToken, this.message});
+  LoginResponseData({
+    required this.accessToken,
+    required this.refreshToken,
+    required this.user,
+    required this.expiresAt,
+  });
 
-  // Method to parse JSON into LoginResponse
-  factory LoginResponse.fromJson(Map<String, dynamic> json) {
-    return LoginResponse(
-      accessToken: json['accessToken'],
-      refreshToken: json['refreshToken'],
-      message: json['message'],
+  factory LoginResponseData.fromJson(Map<String, dynamic> json) {
+    return LoginResponseData(
+      accessToken: json['accessToken'] as String,
+      refreshToken: json['refreshToken'] as String,
+      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      expiresAt: json['expiresAt'] as String,
     );
   }
 }

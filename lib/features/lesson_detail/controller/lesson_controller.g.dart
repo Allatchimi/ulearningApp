@@ -6,8 +6,8 @@ part of 'lesson_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$lessonDetailControllerHash() =>
-    r'ff8240a4917565ae577bbb421f1718f87c376d2a';
+String _$lessonVideosControllerHash() =>
+    r'7ff98a9578b8051e0fe75300cb8d7b9f98419676';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,31 +30,31 @@ class _SystemHash {
   }
 }
 
-/// See also [lessonDetailController].
-@ProviderFor(lessonDetailController)
-const lessonDetailControllerProvider = LessonDetailControllerFamily();
+/// See also [lessonVideosController].
+@ProviderFor(lessonVideosController)
+const lessonVideosControllerProvider = LessonVideosControllerFamily();
 
-/// See also [lessonDetailController].
-class LessonDetailControllerFamily
-    extends Family<AsyncValue<List<LessonVideoItem>?>> {
-  /// See also [lessonDetailController].
-  const LessonDetailControllerFamily();
+/// See also [lessonVideosController].
+class LessonVideosControllerFamily
+    extends Family<AsyncValue<List<LessonVideoItem>>> {
+  /// See also [lessonVideosController].
+  const LessonVideosControllerFamily();
 
-  /// See also [lessonDetailController].
-  LessonDetailControllerProvider call({
-    required int index,
+  /// See also [lessonVideosController].
+  LessonVideosControllerProvider call({
+    required int lessonId,
   }) {
-    return LessonDetailControllerProvider(
-      index: index,
+    return LessonVideosControllerProvider(
+      lessonId: lessonId,
     );
   }
 
   @override
-  LessonDetailControllerProvider getProviderOverride(
-    covariant LessonDetailControllerProvider provider,
+  LessonVideosControllerProvider getProviderOverride(
+    covariant LessonVideosControllerProvider provider,
   ) {
     return call(
-      index: provider.index,
+      lessonId: provider.lessonId,
     );
   }
 
@@ -70,78 +70,78 @@ class LessonDetailControllerFamily
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'lessonDetailControllerProvider';
+  String? get name => r'lessonVideosControllerProvider';
 }
 
-/// See also [lessonDetailController].
-class LessonDetailControllerProvider
-    extends AutoDisposeFutureProvider<List<LessonVideoItem>?> {
-  /// See also [lessonDetailController].
-  LessonDetailControllerProvider({
-    required int index,
+/// See also [lessonVideosController].
+class LessonVideosControllerProvider
+    extends AutoDisposeFutureProvider<List<LessonVideoItem>> {
+  /// See also [lessonVideosController].
+  LessonVideosControllerProvider({
+    required int lessonId,
   }) : this._internal(
-          (ref) => lessonDetailController(
-            ref as LessonDetailControllerRef,
-            index: index,
+          (ref) => lessonVideosController(
+            ref as LessonVideosControllerRef,
+            lessonId: lessonId,
           ),
-          from: lessonDetailControllerProvider,
-          name: r'lessonDetailControllerProvider',
+          from: lessonVideosControllerProvider,
+          name: r'lessonVideosControllerProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$lessonDetailControllerHash,
-          dependencies: LessonDetailControllerFamily._dependencies,
+                  : _$lessonVideosControllerHash,
+          dependencies: LessonVideosControllerFamily._dependencies,
           allTransitiveDependencies:
-              LessonDetailControllerFamily._allTransitiveDependencies,
-          index: index,
+              LessonVideosControllerFamily._allTransitiveDependencies,
+          lessonId: lessonId,
         );
 
-  LessonDetailControllerProvider._internal(
+  LessonVideosControllerProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.index,
+    required this.lessonId,
   }) : super.internal();
 
-  final int index;
+  final int lessonId;
 
   @override
   Override overrideWith(
-    FutureOr<List<LessonVideoItem>?> Function(
-            LessonDetailControllerRef provider)
+    FutureOr<List<LessonVideoItem>> Function(LessonVideosControllerRef provider)
         create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: LessonDetailControllerProvider._internal(
-        (ref) => create(ref as LessonDetailControllerRef),
+      override: LessonVideosControllerProvider._internal(
+        (ref) => create(ref as LessonVideosControllerRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        index: index,
+        lessonId: lessonId,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<LessonVideoItem>?> createElement() {
-    return _LessonDetailControllerProviderElement(this);
+  AutoDisposeFutureProviderElement<List<LessonVideoItem>> createElement() {
+    return _LessonVideosControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is LessonDetailControllerProvider && other.index == index;
+    return other is LessonVideosControllerProvider &&
+        other.lessonId == lessonId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, index.hashCode);
+    hash = _SystemHash.combine(hash, lessonId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -149,37 +149,36 @@ class LessonDetailControllerProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin LessonDetailControllerRef
-    on AutoDisposeFutureProviderRef<List<LessonVideoItem>?> {
-  /// The parameter `index` of this provider.
-  int get index;
+mixin LessonVideosControllerRef
+    on AutoDisposeFutureProviderRef<List<LessonVideoItem>> {
+  /// The parameter `lessonId` of this provider.
+  int get lessonId;
 }
 
-class _LessonDetailControllerProviderElement
-    extends AutoDisposeFutureProviderElement<List<LessonVideoItem>?>
-    with LessonDetailControllerRef {
-  _LessonDetailControllerProviderElement(super.provider);
+class _LessonVideosControllerProviderElement
+    extends AutoDisposeFutureProviderElement<List<LessonVideoItem>>
+    with LessonVideosControllerRef {
+  _LessonVideosControllerProviderElement(super.provider);
 
   @override
-  int get index => (origin as LessonDetailControllerProvider).index;
+  int get lessonId => (origin as LessonVideosControllerProvider).lessonId;
 }
 
-String _$lessonDataControllerHash() =>
-    r'd94da04c39fc1a6514d18b3bec3817de361a6162';
+String _$currentVideoStateHash() => r'b8f176d66bb053cd70430064f4af4b274297ad13';
 
-/// See also [LessonDataController].
-@ProviderFor(LessonDataController)
-final lessonDataControllerProvider = AutoDisposeAsyncNotifierProvider<
-    LessonDataController, LessonVideo>.internal(
-  LessonDataController.new,
-  name: r'lessonDataControllerProvider',
+/// See also [CurrentVideoState].
+@ProviderFor(CurrentVideoState)
+final currentVideoStateProvider =
+    AutoDisposeNotifierProvider<CurrentVideoState, CurrentVideo>.internal(
+  CurrentVideoState.new,
+  name: r'currentVideoStateProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$lessonDataControllerHash,
+      : _$currentVideoStateHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$LessonDataController = AutoDisposeAsyncNotifier<LessonVideo>;
+typedef _$CurrentVideoState = AutoDisposeNotifier<CurrentVideo>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

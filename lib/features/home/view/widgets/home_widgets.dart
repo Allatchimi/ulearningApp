@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -88,11 +86,20 @@ class UserName extends StatelessWidget {
     final userName = Global.storageServices
             .getString(AppConstants.STORAGE_USER_PROFILE_KEY) ??
         "User";
-    return Text24Normal(
-      text: userName,
-      // text: Global.storageServices.getString(AppConstants.STORAGE_USER_PROFILE_KEY),
-      //text: Global.storageServices.getUserProfile().access_token==null?Container(),
-      fontWeight: FontWeight.bold,
+
+    return userState.when(
+      loading: () => const Text24Normal(
+        text: "Loading...",
+        fontWeight: FontWeight.bold,
+      ),
+      error: (error, stack) => const Text24Normal(
+        text: "User",
+        fontWeight: FontWeight.bold,
+      ),
+      data: (user) => Text24Normal(
+        text: user.name ?? "User", // ← Utilisez le nom de l'utilisateur
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
@@ -180,7 +187,6 @@ class CourseItemGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final courseState = ref.watch(homeCourseListProvider);
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 0, vertical: 18.h),
       child: courseState.when(
@@ -194,18 +200,12 @@ class CourseItemGrid extends StatelessWidget {
               childAspectRatio: 1.6),
           itemCount: data?.length ?? 0,
           itemBuilder: (_, int index) {
-            // Assurez-vous que les données existent et vérifiez si elles ne sont pas nulles
-            final courseItem = data?[index];
-            final imagePath = courseItem?.thumbnail ?? ImageRes.defaultImage;
-            final imageProvider = File(imagePath).existsSync()
-                ? FileImage(File(imagePath))
-                : AssetImage(ImageRes.defaultImage) as ImageProvider;
-
             return AppBoxDecoratioonImage(
-              imagePath: imagePath,
-              imageProvider: imageProvider,
-              fit: BoxFit.fitWidth,
-              courseItem: data![index],
+              imagePath:
+                  "${AppConstants.SERVER_API_URL}${data![index].thumbnail!}",
+              // imageProvider: ,
+              fit: BoxFit.cover,
+              courseItem: data[index],
               func: () {
                 Navigator.of(context).pushNamed("/course_detail",
                     arguments: {"id": data[index].id!});

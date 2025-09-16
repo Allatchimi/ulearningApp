@@ -94,7 +94,7 @@ class AppBoxDecoratioonImage extends StatelessWidget {
   final BoxFit fit;
   final CourseItem? courseItem;
   final Function()? func;
-  final ImageProvider? imageProvider;
+  // final ImageProvider? imageProvider;
 
   const AppBoxDecoratioonImage({
     super.key,
@@ -102,7 +102,7 @@ class AppBoxDecoratioonImage extends StatelessWidget {
     this.height = 40,
     this.imagePath = ImageRes.defaultImage,
     this.courseItem,
-    this.imageProvider,
+    // this.imageProvider,
     this.func, // Chemin par défaut
     this.fit = BoxFit.fitHeight,
   });
@@ -116,11 +116,14 @@ class AppBoxDecoratioonImage extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
           image: DecorationImage(
-            fit: BoxFit.fitWidth,
-           // image: _isUrl(imagePath) ? NetworkImage(imagePath) // Utiliser NetworkImage pour les URL//: AssetImage(imagePath)//as ImageProvider, // Utiliser AssetImage pour les chemins locaux
-           // image: FileImage(File(imagePath)),
-            image: imageProvider ?? AssetImage(ImageRes.defaultImage),
-          ),
+              fit: BoxFit.fitWidth,
+              image: _isUrl(imagePath)
+                  ? NetworkImage(imagePath)
+                  : AssetImage(imagePath)
+              // Utiliser NetworkImage pour les URL//: AssetImage(imagePath)//as ImageProvider, // Utiliser AssetImage pour les chemins locaux
+              // image: FileImage(File(imagePath)),
+              // image: imageProvider ?? AssetImage(ImageRes.defaultImage),
+              ),
           borderRadius: BorderRadius.circular(20.w),
         ),
         child: courseItem == null
@@ -139,7 +142,7 @@ class AppBoxDecoratioonImage extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(left: 30.w, bottom: 30.h),
                     child: FadeText(
-                      text: "${courseItem!.lessonNum!} Lessons",
+                      text: "${courseItem!.lessonNum} Lessons",
                       color: AppColors.primaryBackground,
                       fontSize: 8,
                     ),
@@ -149,9 +152,9 @@ class AppBoxDecoratioonImage extends StatelessWidget {
       ),
     );
   }
-/*
+
   // Fonction pour vérifier si une chaîne est une URL
   bool _isUrl(String path) {
     return Uri.tryParse(path)?.hasScheme ?? false;
-  }*/
+  }
 }

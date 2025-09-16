@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/widgets/text_widgets.dart';
-import 'package:ulearning_app/features/course_detail/view/widgets/course_detail_widgets.dart';
 
 class CoursesScreen extends StatelessWidget {
   const CoursesScreen({super.key});

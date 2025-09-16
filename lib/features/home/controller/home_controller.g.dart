@@ -23,12 +23,12 @@ final homeScreenBannerDotsProvider =
 );
 
 typedef _$HomeScreenBannerDots = Notifier<int>;
-String _$homeUserProfileHash() => r'4a2c3ed3369c8502becccb43af4a8aa7d54d6e15';
+String _$homeUserProfileHash() => r'f025a3d571d234c62171d069438d4b25893fc9e2';
 
 /// See also [HomeUserProfile].
 @ProviderFor(HomeUserProfile)
 final homeUserProfileProvider =
-    AsyncNotifierProvider<HomeUserProfile, UserProfile>.internal(
+    AsyncNotifierProvider<HomeUserProfile, User>.internal(
   HomeUserProfile.new,
   name: r'homeUserProfileProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -38,7 +38,7 @@ final homeUserProfileProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$HomeUserProfile = AsyncNotifier<UserProfile>;
+typedef _$HomeUserProfile = AsyncNotifier<User>;
 String _$homeCourseListHash() => r'c2aee2366fd98de03ae10671c365b7c81023b286';
 
 /// See also [HomeCourseList].

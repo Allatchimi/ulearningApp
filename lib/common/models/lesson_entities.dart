@@ -1,42 +1,75 @@
 import 'package:ulearning_app/common/models/course_entities.dart';
+import 'package:ulearning_app/common/utils/constants.dart';
 import 'package:video_player/video_player.dart';
 
 class LessonVideoItem {
   final String? name;
-  final String? url;
+  final String url;
   final String? thumbnail;
   final String? lessonName;
-  final int? lessonId;
+  final int? duration;
+  final int? orderIndex;
   final int? id;
 
-  LessonVideoItem({this.name, this.url, this.thumbnail,this.lessonName,this.lessonId,this.id});
+  LessonVideoItem(
+      {this.name,
+      required this.url,
+      this.thumbnail,
+      this.lessonName,
+      this.id,
+      this.duration,
+      this.orderIndex});
+
   factory LessonVideoItem.fromJson(Map<String, dynamic> json) =>
       LessonVideoItem(
-        name: json["name"],
-        url: json["url"],
-        thumbnail: json["thumbnail"],
-        lessonName: json["lessonName"],
-        lessonId: json["lessonId"],
-        id: json["id"]
-      );
+          name: json["name"],
+          url: json["url"],
+          thumbnail: json["thumbnail"],
+          lessonName: json["lessonName"],
+          duration: json["duration"],
+          orderIndex: json["orderIndex"],
+          id: json["id"]);
+
+  String get fullUrl {
+    if (url.startsWith('http')) {
+      return url;
+    }
+
+    final baseUrl = AppConstants.SERVER_API_URL;
+
+    // Nettoyer les slashes en double
+    String cleanBase = baseUrl.endsWith('/')
+        ? baseUrl.substring(0, baseUrl.length - 1)
+        : baseUrl;
+
+    String cleanPath = url.startsWith('/') ? url : '/$url';
+
+    // Supprimer les doubles slashes potentiels
+    cleanPath = cleanPath.replaceAll('//', '/');
+
+    return '$cleanBase$cleanPath';
+  }
 
   Map<String, dynamic> toJson() => {
-    "name": name,
-    "url": url,
-    "thumbnail": thumbnail,
-    "lessonName":lessonName,
-    "lessonId": lessonId,
-    "id":id
-  };
+        "name": name,
+        "url": url,
+        "thumbnail": thumbnail,
+        "lessonName": lessonName,
+        "duration": duration,
+        "orderIndex": orderIndex,
+        "id": id
+      };
 
   @override
   String toString() {
-    return 'LessonVideoItem{name: $name, url: $url, thumbnail: $thumbnail, lessonName: $lessonName, lessonId: $lessonId, id: $id}';
+    return 'LessonVideoItem{name: $name, url: $url, thumbnail: $thumbnail, lessonName: $lessonName, id: $id, duration: $duration, orderIndex: $orderIndex}';
   }
 }
+
 class LessonVideo {
   final List<LessonVideoItem> lessonItem;
-  final VideoPlayerController? initializeVideoPlayer; // Changed to VideoPlayerController
+  final VideoPlayerController?
+      initializeVideoPlayer; // Changed to VideoPlayerController
   final bool isPlay;
   final String? url;
 
@@ -55,33 +88,33 @@ class LessonVideo {
   }) {
     return LessonVideo(
       lessonItem: lessonItem ?? this.lessonItem,
-      initializeVideoPlayer: initializeVideoPlayer ?? this.initializeVideoPlayer,
+      initializeVideoPlayer:
+          initializeVideoPlayer ?? this.initializeVideoPlayer,
       isPlay: isPlay ?? this.isPlay,
       url: url ?? this.url,
     );
   }
 }
+
 //login result
-class LessonItem{
+class LessonItem {
   String? name;
   String? thumbnail;
   String? description;
   int? id;
 
   LessonItem({this.name, this.thumbnail, this.description, this.id});
-  factory LessonItem.fromJson(Map<String,dynamic> json)=>
-    LessonItem(
+  factory LessonItem.fromJson(Map<String, dynamic> json) => LessonItem(
       name: json["name"],
       description: json["description"],
       thumbnail: json["thumbnail"],
-      id: json["id"]
-  );
-  Map<String,dynamic> toJson() => {
-    "name": name,
-    "description": description,
-    "thumbnail": thumbnail,
-    "id": id,
-  };
+      id: json["id"]);
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "description": description,
+        "thumbnail": thumbnail,
+        "id": id,
+      };
 
   @override
   String toString() {
@@ -103,8 +136,8 @@ class LessonDetailResponseEntity {
       msg: json['msg'] as String?,
       data: json['data'] != null
           ? (json['data'] as List)
-          .map((item) => LessonVideoItem.fromJson(item))
-          .toList()
+              .map((item) => LessonVideoItem.fromJson(item))
+              .toList()
           : null,
     );
   }
@@ -143,13 +176,13 @@ class Lesson {
 
   // Method to convert a Lesson instance into a JSON object
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'cour': cour?.toJson(),
-    'thumbnail': thumbnail,
-    'description': description,
-    'video': video?.map((item) => item.toJson()).toList(),
-  };
+        'id': id,
+        'name': name,
+        'cour': cour?.toJson(),
+        'thumbnail': thumbnail,
+        'description': description,
+        'video': video?.map((item) => item.toJson()).toList(),
+      };
 
   @override
   String toString() {
@@ -188,11 +221,10 @@ class LessonListResponseEntity {
   String? msg;
   List<LessonItem>? data;
 
-
   LessonListResponseEntity(
       {this.code,
       this.msg,
-      this.data});// Factory constructor to create an instance from JSON
+      this.data}); // Factory constructor to create an instance from JSON
   factory LessonListResponseEntity.fromJson(Map<String, dynamic> json) {
     return LessonListResponseEntity(
       code: json['code'] as int?,
@@ -200,14 +232,16 @@ class LessonListResponseEntity {
       data: json['data'] != null ? List<LessonItem>.from(json['data']) : null,
     );
   }
-
 }
 
 class LessonRequestEntity {
   int? lessonId;
   //final String? additionalInfo; // Example: Any additional data you want to send with the request
 
-  LessonRequestEntity({this.lessonId, /*this.additionalInfo*/});
+  LessonRequestEntity({
+    this.lessonId,
+    /*this.additionalInfo*/
+  });
 
   // Convert object to JSON
   Map<String, dynamic> toJson() {
@@ -217,6 +251,3 @@ class LessonRequestEntity {
     };
   }
 }
-
-
-

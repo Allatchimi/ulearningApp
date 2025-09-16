@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/widgets/search_widgets.dart';
 import 'package:ulearning_app/features/home/controller/home_controller.dart';
 import 'package:ulearning_app/features/home/view/widgets/home_widgets.dart';
+import 'package:ulearning_app/features/search/view/widgets/search_widgets.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
@@ -41,7 +42,7 @@ class _HomsState extends ConsumerState<Home> {
                 const HelloText(),
                 UserName(ref: ref),
                 SizedBox(height: 20.h),
-                searchBar(),
+                searchBar(controller: TextEditingController(),onSearch: () { },),
                 SizedBox(height: 20.h),
                 HomeBanner(ref: ref, controller: _controller),
                 // SizedBox(height: 5.h,),

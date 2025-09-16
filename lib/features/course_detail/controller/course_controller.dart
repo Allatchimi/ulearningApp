@@ -7,34 +7,37 @@ part 'course_controller.g.dart';
 @riverpod
 Future<CourseItem?> courseDetailController(CourseDetailControllerRef ref,
     {required int index}) async {
-  // Pass the index directly as the ID
-  final response = await CourseRepo.courseDetail(id: index);
-  // Check if response or data is null before accessing
- // print("Response data dans controller : ${response}");
+  print("🔄 Fetching course detail for ID: $index");
 
-  if (response != null && response.code == 200 && response.data != null) {
-    return response.data;
-  } else {
-    print("for course Request failed with code: ${response?.code ?? 'No response'} or data is null");
+  try {
+    final course = await CourseRepo.courseDetail(id: index);
+
+    if (course != null) {
+      print("✅ Course found: ${course.name}");
+      return course;
+    } else {
+      print("❌ Course not found for ID: $index");
+      return null;
+    }
+  } catch (e) {
+    print("❌ Error in courseDetailController: $e");
+    rethrow;
   }
-  return null;
 }
 
 @riverpod
-Future<List<Lesson>?> courseLessonListController(
+Future<List<Lesson>> courseLessonListController(
     CourseLessonListControllerRef ref,
     {required int index}) async {
+  print("🔄 Fetching lessons for course ID: $index");
 
-  // Get the list of lessons for the course by ID
-  final response = await CourseRepo.courseLessonList(id: index);
+  try {
+    final lessons = await CourseRepo.courseLessonList(id: index);
+    print("✅ Found ${lessons.length} lessons");
 
-  // Check if response is not null and is a non-empty list
-  if (response != null && response.isNotEmpty) {
-    return response;
-  } else {
-    print("Request failed: Response is null or empty for course ID: $index");
+    return lessons;
+  } catch (e) {
+    print("❌ Error in courseLessonListController: $e");
+    rethrow;
   }
-
-  return null;
 }
-

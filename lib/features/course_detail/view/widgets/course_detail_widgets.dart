@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/models/course_entities.dart';
 import 'package:ulearning_app/common/models/lesson_entities.dart';
+import 'package:ulearning_app/common/routes/app_routes_names.dart';
 import 'package:ulearning_app/common/utils/app_colors.dart';
+import 'package:ulearning_app/common/utils/constants.dart';
 import 'package:ulearning_app/common/utils/image_res.dart';
 import 'package:ulearning_app/common/widgets/app_shadow.dart';
 import 'package:ulearning_app/common/widgets/button_widgets.dart';
@@ -11,16 +13,14 @@ import 'package:ulearning_app/common/widgets/image_widgets.dart';
 import 'package:ulearning_app/common/widgets/text_widgets.dart';
 import 'package:ulearning_app/features/lesson_detail/controller/lesson_controller.dart';
 
-
-
 class CourseDetailThumbnail extends StatelessWidget {
   final CourseItem courseItem;
-  const CourseDetailThumbnail({super.key,required this.courseItem});
+  const CourseDetailThumbnail({super.key, required this.courseItem});
 
   @override
   Widget build(BuildContext context) {
     return AppBoxDecoratioonImage(
-        imagePath: courseItem.thumbnail!,
+        imagePath: "${AppConstants.SERVER_API_URL}${courseItem.thumbnail!}",
         width: 325.w,
         height: 150.h,
         fit: BoxFit.cover);
@@ -39,6 +39,7 @@ class CourseDetailIconText extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
+            onTap: () => Navigator.of(context).pushNamed(AppRoutesNames.AUTHOR),
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
               decoration: appBoxShadow(radius: 7),
@@ -63,7 +64,7 @@ class CourseDetailIconText extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(left: 30.w),
-            child:  Row(
+            child: Row(
               children: [
                 AppImage(
                   imagePath: ImageRes.play,
@@ -82,24 +83,26 @@ class CourseDetailIconText extends StatelessWidget {
 
 class CourseDetailDescription extends StatelessWidget {
   final CourseItem courseItem;
-  const CourseDetailDescription({super.key,required this.courseItem});
+  const CourseDetailDescription({super.key, required this.courseItem});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 15.h),
-      child:  Column(
+      width: double.infinity,
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text16Normal(
-              text: "Course Description",
-              color: AppColors.primaryText,
-              textAlign: TextAlign.start,
-              fontWeight: FontWeight.bold,
+            text: "Course Description",
+            color: AppColors.primaryText,
+            textAlign: TextAlign.start,
+            fontWeight: FontWeight.bold,
           ),
           Text11Normal(
-           // text: "Description Syncing files to device iPhone 15 Pro Max Performing hot reload Description Syncing files to device iPhone 15 Pro Max",
-            text: courseItem.description!,
+            textAlign: TextAlign.start,
+            // text: "Description Syncing files to device iPhone 15 Pro Max Performing hot reload Description Syncing files to device iPhone 15 Pro Max",
+            text: courseItem.description ?? "No Description",
             color: AppColors.primaryThreeElementText,
           ),
         ],
@@ -109,54 +112,51 @@ class CourseDetailDescription extends StatelessWidget {
 }
 
 class CourseDetailGoBuyButton extends StatelessWidget {
-  const  CourseDetailGoBuyButton({super.key});
+  const CourseDetailGoBuyButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20.h),
-        child: const AppButton(buttonName: "Go Buy")
-    );
+        margin: EdgeInsets.only(top: 20.h),
+        child: const AppButton(buttonName: "Go Buy"));
   }
 }
 
 class CourseDetailIncludes extends StatelessWidget {
   final CourseItem courseItem;
-   const CourseDetailIncludes({super.key, required this.courseItem});
+  const CourseDetailIncludes({super.key, required this.courseItem});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 20.h),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start ,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text14Normal(
             text: "The Course Includes",
             color: AppColors.primaryText,
-            fontWeight: FontWeight.bold ,
+            fontWeight: FontWeight.bold,
           ),
           SizedBox(height: 16.w),
           CourseInfo(
-            imagePath: ImageRes.play,
-            //imagePath: Icons.video_library.toString(),
+            //imagePath: ImageRes.play,
+            icon: Icon(Icons.video_library),
             length: courseItem.videoLen,
             infoText: "Hours Video",
           ),
           SizedBox(height: 16.w),
-           CourseInfo(
-             imagePath: ImageRes.play,
-               //imagePath: Icons.library_books.toString(),
-             length: courseItem.lessonNum,
-             infoText: "Nomber of files"
-           ),
+          CourseInfo(
+              //imagePath: ImageRes.play,
+              icon: Icon(Icons.library_books),
+              length: courseItem.lessonNum,
+              infoText: "Nomber of files"),
           SizedBox(height: 16.w),
-           CourseInfo(
-             imagePath: ImageRes.play,
-             //imagePath: Icons.download.toString(),
-             length: courseItem.downNum,
-             infoText: "Number of items to download"
-           ),
+          CourseInfo(
+              // imagePath: ImageRes.play,
+              icon: Icon(Icons.download),
+              length: courseItem.downNum,
+              infoText: "Number of items to download"),
         ],
       ),
     );
@@ -166,8 +166,14 @@ class CourseDetailIncludes extends StatelessWidget {
 class CourseInfo extends StatelessWidget {
   final String? infoText;
   final int? length;
-  final String imagePath;
-  const CourseInfo({super.key, this.infoText= "item", this.length, this.imagePath=ImageRes.defaultImage});
+  //final String imagePath;
+  final Icon? icon;
+  const CourseInfo(
+      {super.key,
+      this.infoText = "item",
+      this.length,
+      // this.imagePath = ImageRes.defaultImage
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -175,16 +181,14 @@ class CourseInfo extends StatelessWidget {
       children: [
         Container(
           alignment: Alignment.center,
-          child: AppImage(
-            imagePath: imagePath,
-            width: 30,
-            height: 30,
-          ),
+          //child: AppImage(imagePath: imagePath, width: 30,height: 20),
+          child: AppImageIcon(icon: icon!),
         ),
-         Text11Normal(
+        SizedBox(width: 8),
+        Text11Normal(
           color: AppColors.primarySecondaryElementText,
-         // text: "20 Hours videos",
-          text: length == Null? "0 $infoText": "$length $infoText",
+          // text: "20 Hours videos",
+          text: length == Null ? "0 $infoText" : "$length $infoText",
         )
       ],
     );
@@ -194,7 +198,7 @@ class CourseInfo extends StatelessWidget {
 class LessonInfo extends StatelessWidget {
   final List<Lesson> lessonData;
   final WidgetRef ref;
-  const LessonInfo({super.key,required this.lessonData,required this.ref});
+  const LessonInfo({super.key, required this.lessonData, required this.ref});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -202,80 +206,80 @@ class LessonInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          lessonData.isNotEmpty?const Text14Normal(
-            text: "Lesson List",
-            color: AppColors.primaryText,
-            fontWeight: FontWeight.bold ,
-          ):const Text14Normal(
-            text: "Lesson List is Empty",
-            color: AppColors.primaryText,
-            fontWeight: FontWeight.bold ,
-          ), 
-          SizedBox(height: 10.h),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: lessonData.length,
-              itemBuilder: (_,index){
-              final lesson = lessonData[index];
-              return Container(
-                margin: EdgeInsets.only(top: 10.h),
-                padding: EdgeInsets.symmetric(horizontal: 10.h),
-                width: 325.w,
-                height: 80.h,
-                decoration: appBoxShadow(
-                  radius: 10,
-                  sR: 2,
-                  bR: 3,
-                  color: const Color.fromRGBO(255, 255, 255, 1),
-                ),
-                child: InkWell(
-                  onTap: (){
-                    ref.watch(lessonDetailControllerProvider(index: lessonData[index].id!));
-                    Navigator.of(context).pushNamed("/lesson_detail",
-                        arguments: {
-                        "id":lessonData[index].id
-                        }
-                    );
-                  },
-                  child:  Row(
-                    //crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      AppBoxDecoratioonImage(
-                        width: 60.w,
-                        height: 60.w,
-                        imagePath: lesson.thumbnail!,
-                        fit: BoxFit.fill,
-                      ),
-
-                      SizedBox(width: 8.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text13Normal(text: lessonData[index].name! ),
-                          Text10Normal(text: lesson.description ?? "No Description"),
-                        ],
-                      ),
-                      Expanded(child: Container()),
-                      // pour le chevron sa manque l image
-                      //const AppImage(imagePath: ImageRes.defaultImage,width: 24,height: 24,),
-                      //const Text16Normal(text: ">"),
-                      IconButton(
-                        icon: const Icon(Icons.arrow_forward_ios),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed("/lesson_detail",
-                              arguments: {
-                              "id":lessonData[index].id
-                              }
-                          );
-                        },
-                      ),
-                    ],
+          lessonData.isNotEmpty
+              ? const Text14Normal(
+                  text: "Lesson List",
+                  color: AppColors.primaryText,
+                  fontWeight: FontWeight.bold,
+                )
+              : Center(
+                  child: const Text14Normal(
+                    text: "Lesson List is Empty",
+                    color: AppColors.primaryText,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              );
-            }
-            ),
+          SizedBox(height: 10.h),
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: lessonData.length,
+              itemBuilder: (_, index) {
+                final lesson = lessonData[index];
+                return Container(
+                  margin: EdgeInsets.only(top: 10.h),
+                  padding: EdgeInsets.symmetric(horizontal: 10.h),
+                  width: 325.w,
+                  height: 80.h,
+                  decoration: appBoxShadow(
+                    radius: 10,
+                    sR: 2,
+                    bR: 3,
+                    color: const Color.fromRGBO(255, 255, 255, 1),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      ref.watch(lessonVideosControllerProvider(
+                          lessonId: lessonData[index].id!));
+                      Navigator.of(context).pushNamed("/lesson_detail",
+                          arguments: {"id": lessonData[index].id});
+                    },
+                    child: Row(
+                      //crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AppBoxDecoratioonImage(
+                          width: 60.w,
+                          height: 60.w,
+                          imagePath:
+                              "${AppConstants.SERVER_API_URL}${lessonData[index].thumbnail!}",
+                          fit: BoxFit.fill,
+                        ),
+
+                        SizedBox(width: 8.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text13Normal(text: lessonData[index].name!),
+                            Text10Normal(
+                                text: lesson.description ?? "No Description"),
+                          ],
+                        ),
+                        Expanded(child: Container()),
+                        // pour le chevron sa manque l image
+                        //const AppImage(imagePath: ImageRes.defaultImage,width: 24,height: 24,),
+                        //const Text16Normal(text: ">"),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_forward_ios),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed("/lesson_detail",
+                                arguments: {"id": lessonData[index].id});
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
           /*Container(
             padding: EdgeInsets.symmetric(horizontal: 10.h),
             width: 325.w,
@@ -320,7 +324,3 @@ class LessonInfo extends StatelessWidget {
     );
   }
 }
-
-
-
-

@@ -11,4 +11,15 @@ class AppRoutesNames{
   static const String COURS = "/cours";
   static const String YOURCOURS = "/your_cours";
   static const String SETTINGS = "/settings";
+  static const String SEARCH = "/search";
+
+  static const String PAYMENT_DETAIL = "/payment_detail";
+  static const String ACHIEVEMENT = "/achievement";
+  static const String LOVE = "/love";
+  static const String LEARNING_REMINDER = "/learning_reminder";
+  static const String MY_COURS = "/my_cours";
+  static const String BUY_COURSE = "/buy_course";
+  static const String STAR = "/star";
+    static const String AUTHOR = "/author";
+  
 }

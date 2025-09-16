@@ -5,54 +5,58 @@ import 'package:ulearning_app/common/widgets/app_shadow.dart';
 import 'package:ulearning_app/common/widgets/app_textfield.dart';
 
 
-Widget searchBar(){
+
+Widget searchBar({
+  required TextEditingController controller,
+  required VoidCallback onSearch,
+}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      //search text
-      Container(
-        width: 280.w,
-        height: 40.h,
-        decoration: appBoxShadow(
-          color: AppColors.primaryBackground,
-          border: Border.all(color: AppColors.primaryFourElementText),
-        ),
-        child: Row(
-          children: [
-            Container(
-              margin: EdgeInsets.only(left: 17.w,top: 5.h),
-              child:const Icon(
-                  Icons.search,
-                  color:AppColors.primaryFourElementText,
+      // Champ de recherche
+      Expanded(
+        child: Container(
+          height: 40.h,
+          decoration: appBoxShadow(
+            color: AppColors.primaryBackground,
+            border: Border.all(color: AppColors.primaryFourElementText),
+          ),
+          child: Row(
+            children: [
+              const SizedBox(width: 8),
+              const Icon(Icons.search, color: AppColors.primaryFourElementText),
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  decoration: const InputDecoration(
+                    hintText: "Search your course ...",
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                ),
               ),
-            ),
-            SizedBox(
-              width: 240.w,
-              height: 40.h,
-              child: appTextFieldOnly(width: 40,height: 280,hintText: "search your course  ..."),
-            )
-          ],
+            ],
+          ),
         ),
       ),
-      // search button
+      const SizedBox(width: 8),
+      // Bouton recherche
       GestureDetector(
-        onTap: (){
-
-        },
+        onTap: onSearch,
         child: Container(
-          padding: EdgeInsets.all(5.w),
           width: 40.w,
           height: 40.h,
-          decoration :appBoxShadow(
+          decoration: appBoxShadow(
             border: Border.all(color: AppColors.primaryElement),
-
           ),
           child: const Icon(
-              color:AppColors.primaryBackground,
-              Icons.send_and_archive_rounded
+            Icons.send_and_archive_rounded,
+            color: AppColors.primaryBackground,
           ),
         ),
-      )
+      ),
     ],
   );
 }
+
+

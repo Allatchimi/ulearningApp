@@ -20,6 +20,19 @@ class AppImage extends StatelessWidget {
   }
 }
 
+class AppImageIcon extends StatelessWidget {
+  final Icon icon;
+  
+  const AppImageIcon({
+    super.key, 
+    required this.icon
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return icon;
+  }
+}
 
 Widget appImageWithColor(
     {String imagePath = "",

@@ -11,10 +11,7 @@ class ImageRes{
   ImageRes._();
   static const String _imageBase = "assets/images";
   static const String _iconBase = "assets/icons";
-  static const String _videoBase = "assets/videos";
-
   static const String defaultImage = "$_iconBase/default.png";
-
   static const String  home = '$_iconBase/home.png';
   static const String  search = '$_iconBase/search.png';
   static const String play  = '$_iconBase/play.png';

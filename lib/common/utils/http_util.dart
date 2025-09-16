@@ -15,8 +15,9 @@ class HttpUtil {
   HttpUtil._internal() {
     BaseOptions options = BaseOptions(
       baseUrl: AppConstants.SERVER_API_URL, // Utilisez l'adresse IP correcte
-     // baseUrl: "http://10.0.2.2:8080",
-      connectTimeout: const Duration(seconds: 15), // Augmentez le timeout si nécessaire
+      // baseUrl: "http://10.0.2.2:8080",
+      connectTimeout:
+          const Duration(seconds: 15), // Augmentez le timeout si nécessaire
       receiveTimeout: const Duration(seconds: 15),
       contentType: "application/json; charset=utf-8",
       responseType: ResponseType.json,
@@ -26,12 +27,12 @@ class HttpUtil {
 
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
-        debugPrint("Complete URL: ${options.uri}"); 
+        debugPrint("Complete URL: ${options.uri}");
         return handler.next(options);
       },
       onResponse: (response, handler) {
-       // print("Response data: ${response.data}");
-       // print("Response data type: ${response.data.runtimeType}");
+        // print("Response data: ${response.data}");
+        // print("Response data type: ${response.data.runtimeType}");
         return handler.next(response);
       },
       onError: (DioException e, handler) async {
@@ -66,13 +67,14 @@ class HttpUtil {
   }
 
   Future<dynamic> post(
-      String path, {
-        Object? data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-      }) async {
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
     Options requestOptions = options ?? Options();
-    requestOptions.headers = requestOptions.headers??{}; // Combine les en-têtes
+    requestOptions.headers =
+        requestOptions.headers ?? {}; // Combine les en-têtes
     requestOptions.followRedirects = true;
 
     // Ajoute les en-têtes d'autorisation si disponibles
@@ -89,12 +91,127 @@ class HttpUtil {
         options: requestOptions,
       );
 
-     // print("Response status: ${response.statusCode}"); // Log du statut de la réponse
-    // print("Response data: ${response.data}"); // Log des données de la réponse
+      // print("Response status: ${response.statusCode}"); // Log du statut de la réponse
+      // print("Response data: ${response.data}"); // Log des données de la réponse
       return response.data;
     } catch (e) {
       print("Dio error: $e");
       rethrow; // Rethrow pour que les erreurs soient gérées ailleurs
+    }
+  }
+
+  Future<dynamic> get(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
+    Options requestOptions = options ?? Options();
+    requestOptions.headers ??= {};
+    requestOptions.followRedirects = true;
+
+    // Ajoute les en-têtes d'autorisation
+    Map<String, dynamic>? authorization = getAuthorizationHeader();
+    if (authorization != null) {
+      requestOptions.headers!.addAll(authorization);
+    }
+
+    try {
+      var response = await dio.get(
+        path,
+        queryParameters: queryParameters,
+        options: requestOptions,
+      );
+      return response.data;
+    } catch (e) {
+      print("Dio GET error: $e");
+      rethrow;
+    }
+  }
+
+  Future<dynamic> put(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
+    Options requestOptions = options ?? Options();
+    requestOptions.headers ??= {};
+    requestOptions.followRedirects = true;
+
+    Map<String, dynamic>? authorization = getAuthorizationHeader();
+    if (authorization != null) {
+      requestOptions.headers!.addAll(authorization);
+    }
+
+    try {
+      var response = await dio.put(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: requestOptions,
+      );
+      return response.data;
+    } catch (e) {
+      print("Dio PUT error: $e");
+      rethrow;
+    }
+  }
+
+  Future<dynamic> delete(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
+    Options requestOptions = options ?? Options();
+    requestOptions.headers ??= {};
+    requestOptions.followRedirects = true;
+
+    Map<String, dynamic>? authorization = getAuthorizationHeader();
+    if (authorization != null) {
+      requestOptions.headers!.addAll(authorization);
+    }
+
+    try {
+      var response = await dio.delete(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: requestOptions,
+      );
+      return response.data;
+    } catch (e) {
+      print("Dio DELETE error: $e");
+      rethrow;
+    }
+  }
+
+  Future<dynamic> patch(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
+    Options requestOptions = options ?? Options();
+    requestOptions.headers ??= {};
+    requestOptions.followRedirects = true;
+
+    Map<String, dynamic>? authorization = getAuthorizationHeader();
+    if (authorization != null) {
+      requestOptions.headers!.addAll(authorization);
+    }
+
+    try {
+      var response = await dio.patch(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: requestOptions,
+      );
+      return response.data;
+    } catch (e) {
+      print("Dio PATCH error: $e");
+      rethrow;
     }
   }
 
@@ -153,7 +270,9 @@ ErrorEntity createErrorEntity(DioException error) {
         case 500:
           return ErrorEntity(code: 500, message: "Internal server error");
         default:
-          return ErrorEntity(code: error.response?.statusCode ?? -1, message: "Server error !");
+          return ErrorEntity(
+              code: error.response?.statusCode ?? -1,
+              message: "Server error !");
       }
     case DioExceptionType.cancel:
       print("Request cancelled.");

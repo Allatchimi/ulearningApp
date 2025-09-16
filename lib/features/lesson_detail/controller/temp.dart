@@ -34,8 +34,8 @@ class _LessonDetailState extends ConsumerState<LessonDetail> {
 
   @override
   Widget build(BuildContext context) {
-    var lessonData = ref.watch(lessonDataControllerProvider);
-    var lessonDetail = ref.watch(LessonDetailControllerProvider(index: args));
+    var lessonData = ref.watch(lessonVideosControllerProvider as ProviderListenable);
+    var lessonDetail = ref.watch(LessonVideosControllerProvider(lessonId: args));
 
     return Scaffold(
       appBar: buildAppBar(text: "Lesson detail"),
@@ -117,7 +117,9 @@ class _LessonDetailState extends ConsumerState<LessonDetail> {
                             child: Text("Ce Lesson n'a pas de Video encore")),
                       );
                     } else {
-                      return LessonVideos(lessonVideoData: data);
+                      return LessonVideos(lessonVideoData: data,onVideoTap: (p0) {
+                        
+                      },);
                     }
                   },
                   error: (error, stackTrace) {

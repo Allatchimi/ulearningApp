@@ -10,8 +10,6 @@ class AppLoader extends _$AppLoader{
   }
 
   void setLoaderValue(bool value){
-
      state =value;
   }
-
 }
