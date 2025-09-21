@@ -48,9 +48,13 @@ class _CourseDetailState extends ConsumerState<CourseDetail> {
                           children: [
                             CourseDetailThumbnail(courseItem: data),
                             CourseDetailIconText(courseItem: data),
+                            const SizedBox(height: 10,),
                             CourseDetailDescription(courseItem: data),
+                            const SizedBox(height: 20,),
                             const CourseDetailGoBuyButton(),
-                            CourseDetailIncludes(courseItem: data)
+                            const SizedBox(height: 20,),
+                            CourseDetailIncludes(courseItem: data),
+                            const SizedBox(height: 20,),
                           ],
                         );
                 },

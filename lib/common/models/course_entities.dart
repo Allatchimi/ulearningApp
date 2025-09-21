@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'dart:ffi';
 
 class CourseRequestEntity{
   int? id;
@@ -120,6 +119,7 @@ class CourseItem {
   final double? price;
   final String? amountTotal;
   final String? categoryName;
+  final String? teacherName;
 
   CourseItem({
     this.id,
@@ -135,6 +135,7 @@ class CourseItem {
     this.price,
     this.amountTotal,
     this.categoryName,
+    this.teacherName
   });
 
   factory CourseItem.fromJson(Map<String, dynamic> json) {
@@ -151,7 +152,8 @@ class CourseItem {
       thumbnail: json['thumbnail'],
       price: json['price'],
       amountTotal: json['amountTotal'],
-      categoryName: json['categoryName'] 
+      categoryName: json['categoryName'],
+      teacherName: json['teacherName']
     );
   }
   // Method to convert CourseItem instance into JSON format
@@ -168,7 +170,9 @@ class CourseItem {
     'thumbnail': thumbnail,
     'price': price,
     'amountTotal': amountTotal,
-    'categoryName': categoryName // Assuming Category has a toJson method
+    'categoryName': categoryName, // Assuming Category has a toJson method
+    'teacherName': teacherName
+    
   };
   @override
   String toString() {
@@ -186,8 +190,7 @@ class CourseItem {
         'price: $price, '
         'amountTotal: $amountTotal, '
         'categoryName: $categoryName'
+        'teacherName: $teacherName'
         ')';
   }
-
-
 }

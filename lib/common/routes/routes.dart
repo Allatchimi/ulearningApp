@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ulearning_app/features/achievement/achievement_screen.dart';
-import 'package:ulearning_app/features/author/author.dart';
+import 'package:ulearning_app/features/author/view/author.dart';
 import 'package:ulearning_app/features/bay_course/buy_course.dart';
 import 'package:ulearning_app/features/course_detail/view/course_detail.dart';
 import 'package:ulearning_app/features/home/view/home.dart';

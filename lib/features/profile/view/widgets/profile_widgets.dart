@@ -18,9 +18,9 @@ final Map<String, String> routeMapping = {
   "Achievement": AppRoutesNames.ACHIEVEMENT,
   "Love": AppRoutesNames.LOVE,
   "Learning Reminders": AppRoutesNames.LEARNING_REMINDER,
-  "My Courses":AppRoutesNames.MY_COURS,
-  "Buy Courses":AppRoutesNames.BUY_COURSE,
-  "4.5":AppRoutesNames.STAR
+  "My Courses": AppRoutesNames.MY_COURS,
+  "Buy Courses": AppRoutesNames.BUY_COURSE,
+  "4.5": AppRoutesNames.STAR
 };
 
 final Map<String, String> info = {
@@ -29,32 +29,30 @@ final Map<String, String> info = {
   "4.5": "cube.png"
 };
 
-AppBar buildAppbar() {
+AppBar buildAppbar(BuildContext context) {
   return AppBar(
-    title: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          width: 18.w,
-          height: 12.h,
-          child: Image.asset("assets/icons/menu-burger.png"),
+      title: Text(
+        "Profile",
+        style: TextStyle(
+          color: AppColors.primaryText,
+          fontWeight: FontWeight.bold,
+          fontSize: 16.sp,
         ),
-        Text(
-          "Profile",
-          style: TextStyle(
-            color: AppColors.primaryText,
-            fontWeight: FontWeight.bold,
-            fontSize: 16.sp,
+      ),
+      centerTitle: true,
+      leading: BackButton(
+        onPressed: () {},
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: SizedBox(
+            width: 24.w,
+            height: 24.h,
+            child: Image.asset("assets/icons/more-vertical.png"),
           ),
         ),
-        SizedBox(
-          width: 24.w,
-          height: 24.h,
-          child: Image.asset("assets/icons/more-vertical.png"),
-        ),
-      ],
-    ),
-  );
+      ]);
 }
 
 Widget profileIconsAndEditBottom() {
@@ -69,13 +67,27 @@ Widget profileIconsAndEditBottom() {
         image: AssetImage("assets/icons/man.png"),
       ),
     ),
-    child: Image(
-      width: 20.w,
-      height: 20.h,
-      image: AssetImage("assets/icons/edit.png"),
+    child: GestureDetector(
+      onTap: () {
+        
+      },
+      child: Container(
+        width: 25.w,
+        height: 25.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: AppColors.primaryElement,
+          border: Border.all(color: AppColors.primaryElement),
+        ),
+        child: const Icon(
+          Icons.edit,
+          color: AppColors.primaryBackground,
+        ),
+      ),
     ),
   );
 }
+
 
 Widget buildListView(BuildContext context) {
   return Column(
@@ -84,8 +96,8 @@ Widget buildListView(BuildContext context) {
         imagesInfo.length,
         (index) => GestureDetector(
           onTap: () {
-            final routeName = routeMapping[imagesInfo.keys.elementAt(index)] 
-                            ?? AppRoutesNames.HOME;
+            final routeName = routeMapping[imagesInfo.keys.elementAt(index)] ??
+                AppRoutesNames.HOME;
             Navigator.of(context).pushNamed(routeName);
           },
           child: Container(
@@ -134,11 +146,11 @@ Widget buildList(BuildContext context) {
             return Expanded(
               child: GestureDetector(
                 onTap: () {
-                    final routeName = routeMapping[info.keys.elementAt(index)] 
-                                    ?? AppRoutesNames.HOME;
-                    Navigator.of(context).pushNamed(routeName);
-                  },
-                  child: Container(
+                  final routeName = routeMapping[info.keys.elementAt(index)] ??
+                      AppRoutesNames.HOME;
+                  Navigator.of(context).pushNamed(routeName);
+                },
+                child: Container(
                   margin: EdgeInsets.only(right: 10.w),
                   child: Container(
                     width: 150.w,

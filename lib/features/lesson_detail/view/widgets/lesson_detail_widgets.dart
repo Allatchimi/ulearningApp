@@ -3,10 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/models/lesson_entities.dart';
 import 'package:ulearning_app/common/utils/app_colors.dart';
 import 'package:ulearning_app/common/utils/constants.dart';
-import 'package:ulearning_app/common/utils/image_res.dart';
 import 'package:ulearning_app/common/widgets/app_shadow.dart';
-
-import '../../../../common/widgets/text_widgets.dart';
+import 'package:ulearning_app/common/widgets/text_widgets.dart';
 
 class LessonVideos extends StatelessWidget {
   final List<LessonVideoItem> lessonVideoData;
@@ -54,7 +52,7 @@ class LessonVideos extends StatelessWidget {
                       AppBoxDecoratioonImage(
                         width: 60.w,
                         height: 60.w,
-                        imagePath: "${AppConstants.SERVER_API_URL}${video.thumbnail!}",
+                        imagePath: "${AppConstants.SERVER_API_URL}${video.thumbnail}",
                         fit: BoxFit.cover,
                       ),
                       SizedBox(width: 8.w),

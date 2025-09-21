@@ -29,11 +29,54 @@ class _SettingsPageState extends State<SettingsPage> {
       backgroundColor: Colors.white,
       appBar: buildAppBar(),
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25,vertical: 16),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+              // Account Section
+              SettingsSection(
+                icon: Icons.person,
+                title: "Account",
+                items: const [
+                  SettingsItem(title: "Edit Account"),
+                  SettingsItem(title: "Change your password"),
+                  SettingsItem(title: "Security & privacy"),
+                ],
+              ),
+              // Notification Section
+              SettingsSection(
+                icon: Icons.notifications,
+                title: "Notification",
+                items: const [
+                  SettingsItem(title: "Notification"),
+                  SettingsItem(title: "App notification"),
+                ],
+              ),
+               // More Section
+              SettingsSection(
+                icon: Icons.more_horiz,
+                title: "More",
+                items: const [
+                  SettingsItem(title: "Language"),
+                  SettingsItem(title: "Country"),
+                ],
+              ),
+                // Logout button
+/*               TextButton.icon(
+                onPressed: () {
+                  // TODO: Implémenter la logique de déconnexion
+                },
+                icon: const Icon(Icons.logout, color: Colors.purple),
+                label: const Text(
+                  "Log Out",
+                  style: TextStyle(color: Colors.purple, fontSize: 20),
+                ), 
+              ),*/
+              const SizedBox(height: 20),
               buildSettingsItem(context: context, func: func),
-            ],
+              ],
+            ),
           ),
         ),
       ),

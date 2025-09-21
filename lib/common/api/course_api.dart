@@ -14,7 +14,7 @@ class CourseAPI {
       );
       print("🎯 API Status: ${apiResponse.status}");
       print("📝 API Message: ${apiResponse.message}");
-      print("📊 Data type: ${apiResponse.data?.runtimeType}");
+      print("📊 Data type: ${apiResponse.data}");
       print("🔢 Number of courses: ${apiResponse.data?.length}");
 
       if (!apiResponse.isSuccess()) {

@@ -295,5 +295,142 @@ class _CourseLessonListControllerProviderElement
   @override
   int get index => (origin as CourseLessonListControllerProvider).index;
 }
+
+String _$teacherCoursesControllerHash() =>
+    r'8b8ff8d0c1d7ccc7cbed71b88d9d3656e13c77cb';
+
+/// See also [teacherCoursesController].
+@ProviderFor(teacherCoursesController)
+const teacherCoursesControllerProvider = TeacherCoursesControllerFamily();
+
+/// See also [teacherCoursesController].
+class TeacherCoursesControllerFamily
+    extends Family<AsyncValue<List<CourseItem>>> {
+  /// See also [teacherCoursesController].
+  const TeacherCoursesControllerFamily();
+
+  /// See also [teacherCoursesController].
+  TeacherCoursesControllerProvider call({
+    required String username,
+  }) {
+    return TeacherCoursesControllerProvider(
+      username: username,
+    );
+  }
+
+  @override
+  TeacherCoursesControllerProvider getProviderOverride(
+    covariant TeacherCoursesControllerProvider provider,
+  ) {
+    return call(
+      username: provider.username,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'teacherCoursesControllerProvider';
+}
+
+/// See also [teacherCoursesController].
+class TeacherCoursesControllerProvider
+    extends AutoDisposeFutureProvider<List<CourseItem>> {
+  /// See also [teacherCoursesController].
+  TeacherCoursesControllerProvider({
+    required String username,
+  }) : this._internal(
+          (ref) => teacherCoursesController(
+            ref as TeacherCoursesControllerRef,
+            username: username,
+          ),
+          from: teacherCoursesControllerProvider,
+          name: r'teacherCoursesControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$teacherCoursesControllerHash,
+          dependencies: TeacherCoursesControllerFamily._dependencies,
+          allTransitiveDependencies:
+              TeacherCoursesControllerFamily._allTransitiveDependencies,
+          username: username,
+        );
+
+  TeacherCoursesControllerProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.username,
+  }) : super.internal();
+
+  final String username;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<CourseItem>> Function(TeacherCoursesControllerRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: TeacherCoursesControllerProvider._internal(
+        (ref) => create(ref as TeacherCoursesControllerRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        username: username,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<CourseItem>> createElement() {
+    return _TeacherCoursesControllerProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is TeacherCoursesControllerProvider &&
+        other.username == username;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, username.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin TeacherCoursesControllerRef
+    on AutoDisposeFutureProviderRef<List<CourseItem>> {
+  /// The parameter `username` of this provider.
+  String get username;
+}
+
+class _TeacherCoursesControllerProviderElement
+    extends AutoDisposeFutureProviderElement<List<CourseItem>>
+    with TeacherCoursesControllerRef {
+  _TeacherCoursesControllerProviderElement(super.provider);
+
+  @override
+  String get username => (origin as TeacherCoursesControllerProvider).username;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

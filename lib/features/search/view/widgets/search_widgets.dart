@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/utils/app_colors.dart';
 import 'package:ulearning_app/common/utils/constants.dart';
 import 'package:ulearning_app/common/widgets/app_shadow.dart';
 import 'package:ulearning_app/common/widgets/text_widgets.dart';
@@ -64,15 +65,15 @@ class _CourseItemListState extends ConsumerState<CourseItemList> {
           itemBuilder: (_, index) {
             final course = filtered[index];
             return Container(
-              margin: EdgeInsets.only(top: 10.h),
+              margin: EdgeInsets.only(top: 16.h),
               padding: EdgeInsets.symmetric(horizontal: 10.h),
               width: 325.w,
               height: 80.h,
               decoration: appBoxShadow(
-                radius: 10,
+                radius: 30,
                 sR: 2,
                 bR: 3,
-                color: Colors.white,
+                color: AppColors.primarySecondaryBackground,
               ),
               child: InkWell(
                 onTap: () {
@@ -90,7 +91,7 @@ class _CourseItemListState extends ConsumerState<CourseItemList> {
                           "${AppConstants.SERVER_API_URL}${course.thumbnail!}",
                       fit: BoxFit.cover,
                     ),
-                    SizedBox(width: 8.w),
+                    SizedBox(width: 10.w),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,

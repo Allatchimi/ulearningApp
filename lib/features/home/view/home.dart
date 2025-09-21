@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/common/widgets/search_widgets.dart';
 import 'package:ulearning_app/features/home/controller/home_controller.dart';
 import 'package:ulearning_app/features/home/view/widgets/home_widgets.dart';
-import 'package:ulearning_app/features/search/view/widgets/search_widgets.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
@@ -36,9 +35,7 @@ class _HomsState extends ConsumerState<Home> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 10.h,
-                ),
+                SizedBox(height: 10.h),
                 const HelloText(),
                 UserName(ref: ref),
                 SizedBox(height: 20.h),

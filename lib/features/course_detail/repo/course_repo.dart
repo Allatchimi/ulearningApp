@@ -53,4 +53,34 @@ class CourseRepo {
       rethrow;
     }
   }
+
+ static Future<List<CourseItem>> getTeacherCourses(String username) async {
+  try {
+    final response = await HttpUtil().get(
+      "/api/cours/teacher-courses?teacherName=$username",
+    );
+
+    final apiResponse = ApiResponse<List<dynamic>>.fromJson(
+      response,
+      (data) {
+        if (data is List) return data;
+        if (data is String) return jsonDecode(data) as List<dynamic>;
+        throw Exception("Unexpected data type: ${data.runtimeType}");
+      },
+    );
+
+    if (apiResponse.data == null) {
+      return []; // ✅ Retourne une liste vide au lieu de null
+    }
+    if (!apiResponse.isSuccess()) throw Exception(apiResponse.message);
+
+    return apiResponse.data!.map((item) {
+      return CourseItem.fromJson(item as Map<String, dynamic>);
+    }).toList();
+  } catch (e) {
+    print("❌ Error fetching teacher courses: $e");
+    rethrow;
+  }
+}
+
 }

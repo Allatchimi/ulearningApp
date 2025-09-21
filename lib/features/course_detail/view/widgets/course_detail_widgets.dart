@@ -33,13 +33,17 @@ class CourseDetailIconText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("le nom dans course item ${courseItem.description}");
     return Container(
       margin: EdgeInsets.only(top: 10.h),
       width: 325.w,
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed(AppRoutesNames.AUTHOR),
+            onTap: () => Navigator.of(context).pushNamed(AppRoutesNames.AUTHOR,
+                arguments: {
+                  "teacherName": courseItem.teacherName ?? "Nom inconnu"
+                }),
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
               decoration: appBoxShadow(radius: 7),
@@ -56,6 +60,7 @@ class CourseDetailIconText extends StatelessWidget {
                 AppImage(
                   imagePath: ImageRes.profile,
                 ),
+                SizedBox(width: 6.w),
                 Text11Normal(
                   text: courseItem.follow.toString(),
                 )
@@ -69,8 +74,23 @@ class CourseDetailIconText extends StatelessWidget {
                 AppImage(
                   imagePath: ImageRes.play,
                 ),
+                SizedBox(width: 6.w),
                 Text11Normal(
                   text: courseItem.lessonNum.toString(),
+                )
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 30.w),
+            child: Row(
+              children: [
+                AppImage(
+                  imagePath: ImageRes.boy,
+                ),
+                SizedBox(width: 6.w),
+                Text11Normal(
+                  text: courseItem.downNum.toString(),
                 )
               ],
             ),
@@ -128,37 +148,30 @@ class CourseDetailIncludes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 20.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text14Normal(
-            text: "The Course Includes",
-            color: AppColors.primaryText,
-            fontWeight: FontWeight.bold,
-          ),
-          SizedBox(height: 16.w),
-          CourseInfo(
-            //imagePath: ImageRes.play,
-            icon: Icon(Icons.video_library),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text14Normal(
+          text: "The Course Includes",
+          color: AppColors.primaryText,
+          fontWeight: FontWeight.bold,
+        ),
+        SizedBox(height: 16.w),
+        CourseInfo(
+            icon: Icons.video_library,
             length: courseItem.videoLen,
-            infoText: "Hours Video",
-          ),
-          SizedBox(height: 16.w),
-          CourseInfo(
-              //imagePath: ImageRes.play,
-              icon: Icon(Icons.library_books),
-              length: courseItem.lessonNum,
-              infoText: "Nomber of files"),
-          SizedBox(height: 16.w),
-          CourseInfo(
-              // imagePath: ImageRes.play,
-              icon: Icon(Icons.download),
-              length: courseItem.downNum,
-              infoText: "Number of items to download"),
-        ],
-      ),
+            infoText: "Hours Video"),
+        SizedBox(height: 10.w),
+        CourseInfo(
+            icon: Icons.library_books,
+            length: courseItem.lessonNum,
+            infoText: "Nomber of files"),
+        SizedBox(height: 10.w),
+        CourseInfo(
+            icon: Icons.download,
+            length: courseItem.downNum,
+            infoText: "Number of items to download"),
+      ],
     );
   }
 }
@@ -166,28 +179,40 @@ class CourseDetailIncludes extends StatelessWidget {
 class CourseInfo extends StatelessWidget {
   final String? infoText;
   final int? length;
-  //final String imagePath;
-  final Icon? icon;
-  const CourseInfo(
-      {super.key,
-      this.infoText = "item",
-      this.length,
-      // this.imagePath = ImageRes.defaultImage
-      this.icon});
+  final double width;
+  final double height;
+  final Color borderColor;
+  final IconData icon;
+
+  const CourseInfo({
+    super.key,
+    this.width = 40,
+    this.height = 40,
+    this.infoText = "item",
+    this.length,
+    this.borderColor = AppColors.primaryElement,
+    this.icon = Icons.send_and_archive_rounded,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
-          alignment: Alignment.center,
-          //child: AppImage(imagePath: imagePath, width: 30,height: 20),
-          child: AppImageIcon(icon: icon!),
+          width: width.w,
+          height: height.h,
+          decoration: appBoxShadow(
+            border: Border.all(color: borderColor),
+          ),
+          child: Icon(
+            icon,
+            color: AppColors.primaryBackground,
+          ),
         ),
-        SizedBox(width: 8),
+        SizedBox(width: 10),
         Text11Normal(
+          fontWeight: FontWeight.bold,
           color: AppColors.primarySecondaryElementText,
-          // text: "20 Hours videos",
           text: length == Null ? "0 $infoText" : "$length $infoText",
         )
       ],
@@ -201,126 +226,85 @@ class LessonInfo extends StatelessWidget {
   const LessonInfo({super.key, required this.lessonData, required this.ref});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          lessonData.isNotEmpty
-              ? const Text14Normal(
-                  text: "Lesson List",
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        lessonData.isNotEmpty
+            ? const Text14Normal(
+                text: "Lesson List",
+                color: AppColors.primaryText,
+                fontWeight: FontWeight.bold,
+              )
+            : Center(
+                child: const Text14Normal(
+                  text: "Lesson List is Empty",
                   color: AppColors.primaryText,
                   fontWeight: FontWeight.bold,
-                )
-              : Center(
-                  child: const Text14Normal(
-                    text: "Lesson List is Empty",
-                    color: AppColors.primaryText,
-                    fontWeight: FontWeight.bold,
+                ),
+              ),
+        SizedBox(height: 10.h),
+        ListView.builder(
+            shrinkWrap: true,
+            itemCount: lessonData.length,
+            itemBuilder: (_, index) {
+              final lesson = lessonData[index];
+              return Container(
+                margin: EdgeInsets.only(top: 10.h),
+                padding: EdgeInsets.symmetric(horizontal: 10.h),
+                width: 325.w,
+                height: 80.h,
+                decoration: appBoxShadow(
+                  radius: 20,
+                  sR: 2,
+                  bR: 3,
+                  color: AppColors.primaryBackground,
+                ),
+                child: InkWell(
+                  onTap: () {
+                    ref.watch(lessonVideosControllerProvider(
+                        lessonId: lessonData[index].id!));
+                    Navigator.of(context).pushNamed("/lesson_detail",
+                        arguments: {"id": lessonData[index].id});
+                  },
+                  child: Row(
+                    //crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      AppBoxDecoratioonImage(
+                        width: 60.w,
+                        height: 60.w,
+                        imagePath:
+                            "${AppConstants.SERVER_API_URL}${lessonData[index].thumbnail}",
+                        fit: BoxFit.cover,
+                      ),
+
+                      SizedBox(width: 8.w),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text13Normal(text: lessonData[index].name!),
+                          Text10Normal(
+                              text: lesson.description ?? "No Description"),
+                        ],
+                      ),
+                  
+
+                      // pour le chevron sa manque l image
+                      //const AppImage(imagePath: ImageRes.defaultImage,width: 24,height: 24,),
+                      //const Text16Normal(text: ">"),
+                      /*                         IconButton(
+                        icon: const Icon(Icons.arrow_forward_ios),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed("/lesson_detail",
+                              arguments: {"id": lessonData[index].id});
+                        },
+                      ), */
+                    ],
                   ),
                 ),
-          SizedBox(height: 10.h),
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: lessonData.length,
-              itemBuilder: (_, index) {
-                final lesson = lessonData[index];
-                return Container(
-                  margin: EdgeInsets.only(top: 10.h),
-                  padding: EdgeInsets.symmetric(horizontal: 10.h),
-                  width: 325.w,
-                  height: 80.h,
-                  decoration: appBoxShadow(
-                    radius: 10,
-                    sR: 2,
-                    bR: 3,
-                    color: const Color.fromRGBO(255, 255, 255, 1),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      ref.watch(lessonVideosControllerProvider(
-                          lessonId: lessonData[index].id!));
-                      Navigator.of(context).pushNamed("/lesson_detail",
-                          arguments: {"id": lessonData[index].id});
-                    },
-                    child: Row(
-                      //crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        AppBoxDecoratioonImage(
-                          width: 60.w,
-                          height: 60.w,
-                          imagePath:
-                              "${AppConstants.SERVER_API_URL}${lessonData[index].thumbnail!}",
-                          fit: BoxFit.fill,
-                        ),
-
-                        SizedBox(width: 8.w),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text13Normal(text: lessonData[index].name!),
-                            Text10Normal(
-                                text: lesson.description ?? "No Description"),
-                          ],
-                        ),
-                        Expanded(child: Container()),
-                        // pour le chevron sa manque l image
-                        //const AppImage(imagePath: ImageRes.defaultImage,width: 24,height: 24,),
-                        //const Text16Normal(text: ">"),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward_ios),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed("/lesson_detail",
-                                arguments: {"id": lessonData[index].id});
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }),
-          /*Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.h),
-            width: 325.w,
-            height: 80.h,
-            decoration: appBoxShadow(
-              radius: 10,
-              sR: 2,
-              bR: 3,
-              color: const Color.fromRGBO(255, 255, 255, 1),
-            ),
-            child: InkWell(
-              onTap: (){},
-              child:  Row(
-                //crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  AppBoxDecoratioonImage(
-                    width: 60.w,
-                    height: 60.w,
-                    imagePath: ImageRes.banner2,
-                    fit: BoxFit.fill,
-                  ),
-
-                  SizedBox(width: 8.w),
-                  const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text13Normal(text: "This first lesson "),
-                        Text10Normal(text: "This first description "),
-                      ],
-                    ),
-                    Expanded(child: Container()),
-                    // pour le chevron sa manque l image
-                    //const AppImage(imagePath: ImageRes.defaultImage,width: 24,height: 24,),
-                    const Text16Normal(text: ">"),
-                ],
-              ),
-            ),
-          ),*/
-        ],
-      ),
+              );
+            }),
+      ],
     );
   }
 }

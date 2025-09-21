@@ -31,10 +31,13 @@ class _SearchPageState extends ConsumerState<SearchPage> {
       data: (homeCourses) {
         // Nettoyage des catégories et suppression des doublons
         final categories = (homeCourses ?? [])
-            .map((c) => c.categoryName?.trim())
-            .whereType<String>()
-            .toSet()
-            .toList();
+          .map((c) => c.categoryName?.trim())
+          .where((name) => name != null && name.isNotEmpty)
+          .cast<String>()
+          .toSet()
+          .toList();
+
+          print("📌 Categories dynamiques: $categories");
 
         final allPrices = (homeCourses ?? []).map((c) => c.price ?? 0);
         final minPriceAvailable =

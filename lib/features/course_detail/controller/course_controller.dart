@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ulearning_app/common/models/course_entities.dart';
 import 'package:ulearning_app/common/models/lesson_entities.dart';
@@ -27,7 +28,8 @@ Future<CourseItem?> courseDetailController(CourseDetailControllerRef ref,
 
 @riverpod
 Future<List<Lesson>> courseLessonListController(
-    CourseLessonListControllerRef ref,
+
+    Ref ref,
     {required int index}) async {
   print("🔄 Fetching lessons for course ID: $index");
 
@@ -39,5 +41,20 @@ Future<List<Lesson>> courseLessonListController(
   } catch (e) {
     print("❌ Error in courseLessonListController: $e");
     rethrow;
+  }
+ }
+
+@riverpod
+Future<List<CourseItem>> teacherCoursesController(
+  TeacherCoursesControllerRef ref, {
+  required String username,
+}) async {
+  try {
+    final courses = await CourseRepo.getTeacherCourses(username);
+    return courses;
+  } catch (e, st) {
+    // Tu n’as pas besoin de ref.state ici
+    // Lancer l’erreur pour que le provider devienne AsyncError
+    throw e;
   }
 }
